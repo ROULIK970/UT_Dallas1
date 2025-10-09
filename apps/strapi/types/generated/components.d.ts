@@ -7,7 +7,8 @@ export interface ArticleAuthorAuthorName extends Struct.ComponentSchema {
     displayName: "authorName"
   }
   attributes: {
-    name: Schema.Attribute.String
+    firstName: Schema.Attribute.String & Schema.Attribute.Required
+    lastName: Schema.Attribute.String
   }
 }
 
