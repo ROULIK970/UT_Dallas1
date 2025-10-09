@@ -369,6 +369,79 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
+  collectionName: "articles"
+  info: {
+    description: ""
+    displayName: "Article"
+    pluralName: "articles"
+    singularName: "article"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    author: Schema.Attribute.Component<"article-author.author-name", true>
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    journalAbbreviation: Schema.Attribute.String
+    journalName: Schema.Attribute.String & Schema.Attribute.Required
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::article.article"
+    > &
+      Schema.Attribute.Private
+    publishedAt: Schema.Attribute.DateTime
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    volume: Schema.Attribute.String
+    year: Schema.Attribute.Integer
+  }
+}
+
+export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
+  collectionName: "blogs"
+  info: {
+    description: ""
+    displayName: "blog"
+    pluralName: "blogs"
+    singularName: "blog"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    author: Schema.Attribute.String
+    authorLogoAvatar: Schema.Attribute.Media<"images">
+    banner: Schema.Attribute.Media<"images"> & Schema.Attribute.Required
+    comments: Schema.Attribute.Component<"blog-component.comments", true>
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"content">
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    description: Schema.Attribute.RichText & Schema.Attribute.Required
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::blog.blog"> &
+      Schema.Attribute.Private
+    publishedAt: Schema.Attribute.DateTime
+    tags: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"all">
+    thumbnail: Schema.Attribute.Media<"images"> & Schema.Attribute.Required
+    timeToRead: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<2>
+    title: Schema.Attribute.String
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiConfigurationConfiguration extends Struct.SingleTypeSchema {
   collectionName: "configurations"
   info: {
@@ -739,6 +812,10 @@ export interface PluginReviewWorkflowsWorkflow
       Schema.Attribute.Required &
       Schema.Attribute.Unique
     publishedAt: Schema.Attribute.DateTime
+    stageRequiredToPublish: Schema.Attribute.Relation<
+      "oneToOne",
+      "plugin::review-workflows.workflow-stage"
+    >
     stages: Schema.Attribute.Relation<
       "oneToMany",
       "plugin::review-workflows.workflow-stage"
@@ -1067,6 +1144,8 @@ declare module "@strapi/strapi" {
       "admin::transfer-token": AdminTransferToken
       "admin::transfer-token-permission": AdminTransferTokenPermission
       "admin::user": AdminUser
+      "api::article.article": ApiArticleArticle
+      "api::blog.blog": ApiBlogBlog
       "api::configuration.configuration": ApiConfigurationConfiguration
       "api::footer.footer": ApiFooterFooter
       "api::navbar.navbar": ApiNavbarNavbar

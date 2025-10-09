@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "journalName": {
+      "type": "string",
+      "required": true
+    },
+    "year": {
+      "type": "integer"
+    },
+    "volume": {
+      "type": "string"
+    },
+    "journalAbbreviation": {
+      "type": "string"
+    },
+    "author": {
+      "displayName": "authorName",
+      "type": "component",
+      "repeatable": true,
+      "component": "article-author.author-name"
+    }
+  }
+}

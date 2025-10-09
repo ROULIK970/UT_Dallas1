@@ -1,0 +1,115 @@
+{
+  "blogs": {
+    "featuredBlog": {
+      "backgroundImg": "/SimilarBlog.png",
+      "img": "/blogs-featured-article.png",
+      "dateOfPublishing": "December 28, 2024",
+      "blogHeading": "2024 Global Business School Research Rankings: Key Trends and Insights",
+      "blogDescription": "Comprehensive analysis of this year's rankings reveals significant shifts in research excellence, with emerging markets gaining ground and traditional leaders adapting to new methodologies.",
+      "blogAuthor": "Dr. Sarah Chen",
+      "authorPosition": "Senior Research Analyst"
+    },
+    "similarBlogs": [
+      {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem1",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem2",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem3",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem4",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem5",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem6",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem7",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem8",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem9",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem10",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+       {
+        "img": "/SimilarBlog.png",
+        "title": "Lorem",
+        "slug": "lorem11",
+        "publishedAt": "December 28, 2024",
+        "readTime": "2 min read",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ],
+    "latestBlogs": [
+      {
+        "blogTitle": "lorem",
+        "blogDescription": "lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "slug": "lorem1"
+      },
+      {
+        "blogTitle": "borem",
+        "blogDescription": "borem ipsum dolor sit amet, consectetur adipiscing elit",
+        "slug": "lorem2"
+      }
+    ]
+  }
+}

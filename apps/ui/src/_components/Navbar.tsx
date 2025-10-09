@@ -1,0 +1,93 @@
+"use client"
+
+import React from 'react'
+import Searchbar from './Searchbar'
+import { useNav } from '@/context/NavContext'
+import { useSearch } from '@/context/FormSearchContext'
+import { useRouter } from 'next/navigation'
+
+interface NavbarProps {
+  mobileMenuOpen: boolean
+  setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) {
+
+  const router = useRouter()
+
+  const { active, setActive } = useNav()
+  const { setSearchClicked } = useSearch()
+  const navElements = [
+    { id: 0, name: "Search by Author", key: "Author" },
+    { id: 1, name: "Search by Article", key: "Article" },
+    { id: 2, name: "Advance Search", key: "AdvancedSearch" },
+    { id: 3, name: "Blogs", key: "blogs" },
+  ]
+
+
+  const handleClick = async (key: string) => {
+  if (key === 'blogs') {
+    router.push('/blogs')
+  } else {
+    setActive(key)
+    setSearchClicked(false)
+
+    if (window.location.pathname !== '/') {
+      // Navigate to `/` first, wait for route to render
+      router.push('/')
+      setTimeout(() => {
+        const heroSection = document.getElementById("hero-description")
+        if (heroSection) {
+          heroSection.scrollIntoView({ behavior: "smooth" })
+        }
+      }, 100) // delay to let route finish rendering
+    } else {
+      // Already on `/`, scroll immediately
+      const heroSection = document.getElementById("hero-description")
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+  }
+}
+
+  return (
+    <>
+    {/* desktop navbar */}
+    <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
+      {navElements.map((element) => (
+        <button
+          key={element.id}
+          className="text-white hidden md:block flex-1 text-center cursor-pointer"
+          onClick={() => handleClick(element.key)}
+
+        >
+          {element.name}
+        </button>
+      ))}
+
+
+      <div className="flex-[2]">
+        <Searchbar />
+      </div>
+    </div>
+    {/* mobile Navbar */}
+    {mobileMenuOpen && (
+        <div className="md:hidden bg-[#1B212E] flex flex-col px-6 py-4 gap-4">
+          {navElements.map((element) => (
+            <button
+              key={element.id}
+              className="text-white text-left text-sm"
+              onClick={() => handleClick(element.key)}
+            >
+              {element.name}
+            </button>
+          ))}
+          
+        </div>
+      )}
+    </>
+    
+
+  )
+}

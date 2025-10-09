@@ -1,5 +1,43 @@
 import type { Schema, Struct } from "@strapi/strapi"
 
+export interface ArticleAuthorAuthorName extends Struct.ComponentSchema {
+  collectionName: "components_article_author_author_names"
+  info: {
+    description: ""
+    displayName: "authorName"
+  }
+  attributes: {
+    name: Schema.Attribute.String
+  }
+}
+
+export interface ArticleAuthorAuthors extends Struct.ComponentSchema {
+  collectionName: "components_article_author_authors"
+  info: {
+    displayName: "authors"
+  }
+  attributes: {
+    affiliation: Schema.Attribute.String & Schema.Attribute.Required
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 30
+        minLength: 2
+      }>
+  }
+}
+
+export interface BlogComponentComments extends Struct.ComponentSchema {
+  collectionName: "components_blog_component_comments"
+  info: {
+    displayName: "comments"
+  }
+  attributes: {
+    comment: Schema.Attribute.Text
+    commentatorName: Schema.Attribute.String
+  }
+}
+
 export interface ExampleExample extends Struct.ComponentSchema {
   collectionName: "components_example_examples"
   info: {
@@ -20,6 +58,17 @@ export interface LayoutNavbar extends Struct.ComponentSchema {
   attributes: {
     links: Schema.Attribute.Component<"shared.link", true>
     logoImage: Schema.Attribute.Component<"shared.image-with-link", false>
+  }
+}
+
+export interface NameAuthorsName extends Struct.ComponentSchema {
+  collectionName: "components_name_authors_names"
+  info: {
+    displayName: "authorsName"
+  }
+  attributes: {
+    affiliation: Schema.Attribute.String
+    name: Schema.Attribute.String
   }
 }
 
@@ -337,8 +386,12 @@ export interface SharedSeoTwitter extends Struct.ComponentSchema {
 declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
+      "article-author.author-name": ArticleAuthorAuthorName
+      "article-author.authors": ArticleAuthorAuthors
+      "blog-component.comments": BlogComponentComments
       "example.example": ExampleExample
       "layout.navbar": LayoutNavbar
+      "name.authors-name": NameAuthorsName
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.carousel": SectionsCarousel
       "sections.contact-form": SectionsContactForm
