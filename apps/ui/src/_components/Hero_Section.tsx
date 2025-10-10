@@ -2,7 +2,7 @@
 import Image from "next/image"
 import SearchByForm from "./SearchByForm"
 import { useNav } from "@/context/NavContext"
-import { useSearch } from "@/context/FormSearchContext"
+import { useArticleSearch } from "@/context/articleContext"
 import { motion } from "framer-motion";
 import ResultsSection from "./ResultsSection"
 
@@ -10,11 +10,12 @@ import ResultsSection from "./ResultsSection"
 export default function Hero_Section() {
 
 
-  const { searchClicked, setSearchClicked } = useSearch()
+  const { searchClicked, setSearchClicked } = useArticleSearch()
 
 
-  console.log(searchClicked)
+
   const { active } = useNav()
+  console.log(active.split("-").join(" "))
 
   const heroDescriptions: Record<string, string> = {
     Author: "This search provides a listing of the papers based on university affiliation specified by the authors of the papers. Author names are not listed in the sequence of the actual publication. Also note that when information on authors is provided, if the same author is listed twice, it indicates that the author has listed multiple affiliations. All articles are written by at least one business school author. The authors marked with this color have Non-Business school affiliation within the specified article.If you choose multiple first names or multiple last names, this search will provide results with results written by all entered first names or last names. If you want to see collaboration of authors, please search on Collaboration page.",
@@ -82,7 +83,8 @@ export default function Hero_Section() {
 
       {!searchClicked ? (
         <div className="flex flex-col justify-center items-center mx-auto max-w-[80%] md:mt-[24em] mt-[30em]">
-          <h1 className="md:text-[64px] text-[32px] font-[700] text-center text-[#2A2A2A] mb-[10px]">{active}</h1>
+          <h1 className="md:text-[64px] text-[32px] font-[700] text-center text-[#2A2A2A] mb-[10px]">{active.split("S").join(" S")}</h1>
+
           <p id="hero-description" className="md:text-[20px] text-[10px] text-center text-[#979797] mb-[3em]">{heroDescriptions[active]}</p>
         </div>
       ) : <ResultsSection />}

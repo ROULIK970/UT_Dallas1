@@ -4,12 +4,30 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useNav } from "@/context/NavContext"
 import CustomSelect from "./CustomSelect"
-import { useSearch } from "@/context/FormSearchContext"
+import { useArticleSearch } from "@/context/articleContext"
 import Image from "next/image"
+import { getFilterOptions } from "@/api/lib/services/articles.service"
 
 export default function SearchByForm() {
+
+const [firstnameOptions, setFirstnameOptions] = useState<{value: string, label: string}[]>([])
+const [lastnameOptions, setLastnameOptions] = useState<{value: string, label: string}[]>([])
+const [journalOptions, setJournalOptions] = useState<{value: string, label: string}[]>([])
+const [articleOptions, setArticleOptions] = useState<{value: string, label: string}[]>([])
+
+useEffect(() => {
+  async function fetchOptions() {
+    const data = await getFilterOptions()
+    setFirstnameOptions(data.firstNameOptions)
+    setLastnameOptions(data.lastNameOptions)
+    setJournalOptions(data.journalOptions)
+    setArticleOptions(data.articleNameOptions)
+  }
+  fetchOptions()
+}, [])
+
   const { active } = useNav()
-  const { searchClicked, setSearchClicked } = useSearch()
+  const {fetchArticles, searchClicked, setSearchClicked } = useArticleSearch()
  const [yearOptions, setYearOptions] = useState<number[]>([])
 
 useEffect(() => {
@@ -99,26 +117,8 @@ const YearComponent = () => (
     authorsName: string[]
   }
 
-  const journalOptions = [
-    { value: "Journal A", label: "Journal A" },
-    { value: "Journal B", label: "Journal B" },
-    { value: "Journal C", label: "Journal C" },
-    { value: "Journal D", label: "Journal D" },
-  ]
+ 
 
-  const firstnameOptions = [
-    { value: "John", label: "John" },
-    { value: "Rad", label: "rad" },
-    { value: "Pip", label: "Pip" },
-    { value: "Kite", label: "Kite" },
-  ]
-
-  const lastnameOptions = [
-    { value: "John", label: "John" },
-    { value: "Rad", label: "rad" },
-    { value: "Pip", label: "Pip" },
-    { value: "Kite", label: "Kite" },
-  ]
 
 
   const validationSchemaMap: Record<string, Yup.ObjectSchema<any>> = {
@@ -160,9 +160,10 @@ const YearComponent = () => (
     },
     validationSchema: validationSchemaMap[active],
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 2))
       setSearchClicked(true)
+      await fetchArticles(values)
     },
   })
   return (
@@ -261,7 +262,7 @@ const YearComponent = () => (
                 instanceId="firstName-select"
                   inputId="articleName"
                   name="articleName"
-                  options={lastnameOptions}
+                  options={articleOptions}
                   isMulti
                   placeholder="Enter article name"
                   value={formik.values.articleName}
@@ -306,7 +307,7 @@ const YearComponent = () => (
         {active === "AdvancedSearch" && (
           <div className="flex  flex-col">
             <div className="flex md:flex-row flex-col gap-6">
-              <div className="text-left flex-1">
+              {/* <div className="text-left flex-1">
                 <div className="flex">
                   <label className="text-[16px]  text-[#333]" htmlFor="universityName">
                     Start typing University's Name (You can select multiple Universities). Authors will be filtered based
@@ -329,11 +330,9 @@ const YearComponent = () => (
                 {formik.touched.universityName && formik.errors.universityName ? (
                   <div className="text-red-500 text-sm">{formik.errors.universityName}</div>
                 ) : null}
-              </div>
+              </div> */}
               {/* Year Range */}
-              <YearComponent />
-            </div>
-            <div className="text-left flex flex-col">
+              <div className="text-left flex flex-col">
               <div className="flex">
                 <label className="text-[16px]  text-[#333]" htmlFor="authorsName">
                   Start typing Author's Name (You can select multiple Author). Articles will be filtered based on
@@ -354,6 +353,9 @@ const YearComponent = () => (
               />
               {formik.touched.authorsName && formik.errors.authorsName ? <div className="text-red-500 text-sm">{formik.errors.authorsName}</div> : null}
             </div>
+              <YearComponent />
+            </div>
+            
             <div className="text-left flex flex-col">
               <div className="flex">
                 <label className="text-[16px]  text-[#333]" htmlFor="articleName">

@@ -3,7 +3,7 @@
 import React from 'react'
 import Searchbar from './Searchbar'
 import { useNav } from '@/context/NavContext'
-import { useSearch } from '@/context/FormSearchContext'
+import { useArticleSearch } from '@/context/articleContext'
 import { useRouter } from 'next/navigation'
 
 interface NavbarProps {
@@ -16,7 +16,8 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
   const router = useRouter()
 
   const { active, setActive } = useNav()
-  const { setSearchClicked } = useSearch()
+
+  const { setSearchClicked } = useArticleSearch()
   const navElements = [
     { id: 0, name: "Search by Author", key: "Author" },
     { id: 1, name: "Search by Article", key: "Article" },
@@ -26,53 +27,60 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
 
 
   const handleClick = async (key: string) => {
-  if (key === 'blogs') {
-    router.push('/blogs')
-  } else {
-    setActive(key)
-    setSearchClicked(false)
+    if (key === 'blogs') {
+      router.push('/blogs')
+    } else {
+      setActive(key)
+      setSearchClicked(false)
 
-    if (window.location.pathname !== '/') {
-      // Navigate to `/` first, wait for route to render
-      router.push('/')
-      setTimeout(() => {
+      if (window.location.pathname !== '/') {
+
+        router.push('/')
+        setTimeout(() => {
+          const heroSection = document.getElementById("hero-description")
+          if (heroSection) {
+            heroSection.scrollIntoView({ behavior: "smooth" })
+          }
+        }, 100)
+      } else {
         const heroSection = document.getElementById("hero-description")
         if (heroSection) {
           heroSection.scrollIntoView({ behavior: "smooth" })
         }
-      }, 100) // delay to let route finish rendering
-    } else {
-      // Already on `/`, scroll immediately
-      const heroSection = document.getElementById("hero-description")
-      if (heroSection) {
-        heroSection.scrollIntoView({ behavior: "smooth" })
       }
     }
   }
-}
 
   return (
     <>
-    {/* desktop navbar */}
-    <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
-      {navElements.map((element) => (
-        <button
-          key={element.id}
-          className="text-white hidden md:block flex-1 text-center cursor-pointer"
-          onClick={() => handleClick(element.key)}
+      {/* desktop navbar */}
+      <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
+        {navElements.map((element) => (
+          <button
+            key={element.id}
+            className="text-white hidden md:block flex-1 text-center cursor-pointer"
+            onClick={() => handleClick(element.key)}
 
-        >
-          {element.name}
-        </button>
-      ))}
+          >
+            <span className="relative">
+              {element.name}
+              {active === element.key && (
+                <span className="absolute left-0 bottom-0 h-[2px] w-full bg-gray-400"></span>
+              )}
+
+            </span>
 
 
-      <div className="flex-[2]">
-        <Searchbar />
+          </button>
+        ))}
+
+
+        <div className="flex-[2]">
+          <Searchbar />
+        </div>
       </div>
-    </div>
-    {/* mobile Navbar */}
-    {mobileMenuOpen && (
+      {/* mobile Navbar */}
+      {mobileMenuOpen && (
         <div className="md:hidden bg-[#1B212E] flex flex-col px-6 py-4 gap-4">
           {navElements.map((element) => (
             <button
@@ -83,11 +91,11 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
               {element.name}
             </button>
           ))}
-          
+
         </div>
       )}
     </>
-    
+
 
   )
 }

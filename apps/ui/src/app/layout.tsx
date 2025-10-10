@@ -5,7 +5,8 @@ import Header from "../_components/Header";
 import Hero_Section from "../_components/Hero_Section";
 import Footer from "@/_components/Footer";
 import { NavProvider } from "../context/NavContext"
-import { FormSearchProvider } from "@/context/FormSearchContext";
+import { ArticleSearchProvider } from "@/context/articleContext";
+// import { FormSearchProvider } from "@/context/FormSearchContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +32,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><FormSearchProvider>
+      ><ArticleSearchProvider>
         <NavProvider>
           <Header />
           {children}
           <Footer />
         </NavProvider>
-      </FormSearchProvider>
+      </ArticleSearchProvider>
 
       </body>
     </html>
