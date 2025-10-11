@@ -43,12 +43,12 @@ useEffect(() => {
 
 
 const YearComponent = () => (
-  <div className="flex flex-col gap-2 text-left flex-1 md:flex-[0.5]">
-    <label className="text-[16px] text-[#333]" htmlFor="yearRange">
+  <div className="flex flex-col  text-left flex-1 md:flex-[0.5] ">
+    <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
       Select the year range
     </label>
 
-    <div className="flex items-center border rounded-lg overflow-hidden bg-[#F1F5FF]">
+    <div className="flex items-center border rounded-lg overflow-hidden p-[10px] bg-[#F1F5FF]">
       {/* Start Year */}
       <div className="flex items-center md:px-3 py-2 flex-1">
         <Image src="/calendar.svg" alt="start-year-icon" width={18.5} height={18.5} className="mr-2" />
@@ -145,9 +145,6 @@ const YearComponent = () => (
   }
 
   const formik = useFormik<FormValues>({
-
-
-
     initialValues: {
       firstName: [],
       lastName: [],
@@ -166,6 +163,7 @@ const YearComponent = () => (
       await fetchArticles(values)
     },
   })
+
   return (
     <div className="w-full text-white  bg-white shadow-[0_0_10px_0_rgba(0,0,0,0.1)] rounded-[14px] mt-[20px]">
       <form onSubmit={formik.handleSubmit} className="p-4 relative">
@@ -175,7 +173,7 @@ const YearComponent = () => (
             <div className="md:flex  gap-6 ">
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="flex-1 text-[16px] text-[#333]" htmlFor="firstName">
+                  <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
                     Author's First Name (You can select multiple Authors)
                   </label>
                   <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
@@ -197,7 +195,7 @@ const YearComponent = () => (
 
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="text-[16px] flex-1 text-[#333]" htmlFor="lastName">
+                  <label className="text-[16px] flex-1 text-[#333] mb-[10px]" htmlFor="lastName">
                     Author's Last Name (You can select multiple Authors)
                   </label>
                   <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
@@ -222,7 +220,7 @@ const YearComponent = () => (
 
             <div className="text-left mb-3">
               <div className="flex">
-                <label className="text-[16px] mr-[15px] text-[#333]" htmlFor="journals">
+                <label className="text-[16px] mr-[15px] text-[#333] mb-[10px]" htmlFor="journals">
                   Journals
                 </label>
                 <span className="text-black"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span></div>
@@ -250,9 +248,9 @@ const YearComponent = () => (
         {active === "Article" && (
           <div className="flex flex-col gap-3">
             <div className="flex md:flex-row flex-col gap-6">
-              <div className="text-left flex flex-col flex-1">
+              <div className="text-left flex flex-col flex-2">
                 <div className="flex">
-                  <label className="text-[16px] flex-1  text-[#333]" htmlFor="articleName">
+                  <label className="text-[16px] flex-1 mb-[10px] text-[#333]" htmlFor="articleName">
                     Start typing Article's Name (You can select multiple Articles)
                   </label>
                   <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span></div>
@@ -279,7 +277,7 @@ const YearComponent = () => (
 
             <div className="text-left mb-3">
               <div className="flex">
-                <label className="text-[16px] mr-[15px] text-[#333]" htmlFor="journal">
+                <label className="text-[16px] mr-[15px] text-[#333] mb-[10px]" htmlFor="journal">
                   Journals
                 </label>
                 <span className="text-black"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
@@ -305,60 +303,58 @@ const YearComponent = () => (
         {/* Advanced Search Form */}
 
         {active === "AdvancedSearch" && (
-          <div className="flex  flex-col">
+          <div className="flex  flex-col gap-3">
             <div className="flex md:flex-row flex-col gap-6">
-              {/* <div className="text-left flex-1">
+              
+              {/* Year Range */}
+              <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="text-[16px]  text-[#333]" htmlFor="universityName">
-                    Start typing University's Name (You can select multiple Universities). Authors will be filtered based
-                    on universitites selected.
+                  <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
+                    Author's First Name (You can select multiple Authors)
                   </label>
                   <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
                 </div>
 
+                <CustomSelect
+                instanceId="firstName-select"
+                  name="firstName"
+                  inputId="firstName"
+                  options={firstnameOptions}
+                  isMulti
+                  placeholder="Enter First Name"
+                  value={formik.values.firstName}
+                  onChange={(value) => formik.setFieldValue("firstName", value)}
+                />
+
+                {formik.touched.firstName && formik.errors.firstName ? <div className="text-red-500 text-sm">{formik.errors.firstName}</div> : null}
+              </div>
+
+              <div className="text-left flex-1">
+                <div className="flex">
+                  <label className="text-[16px] flex-1 text-[#333] mb-[10px]" htmlFor="lastName">
+                    Author's Last Name (You can select multiple Authors)
+                  </label>
+                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                </div>
 
                 <CustomSelect
                 instanceId="firstName-select"
-                  inputId="universityName"
-                  name="universityName"
+                  inputId="lastName"
+                  name="lastName"
                   options={lastnameOptions}
                   isMulti
-                  placeholder="Enter University name"
-                  value={formik.values.universityName}
-                  onChange={(value) => formik.setFieldValue("universityName", value)}
+                  placeholder="Enter last name"
+                  value={formik.values.lastName}
+                  onChange={(value) => formik.setFieldValue("lastName", value)}
                 />
-                {formik.touched.universityName && formik.errors.universityName ? (
-                  <div className="text-red-500 text-sm">{formik.errors.universityName}</div>
-                ) : null}
-              </div> */}
-              {/* Year Range */}
-              <div className="text-left flex flex-col">
-              <div className="flex">
-                <label className="text-[16px]  text-[#333]" htmlFor="authorsName">
-                  Start typing Author's Name (You can select multiple Author). Articles will be filtered based on
-                  universitites selected.
-                </label>
-                <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                {formik.touched.lastName && formik.errors.lastName ? <div className="text-red-500 text-sm">{formik.errors.lastName}</div> : null}
               </div>
-
-              <CustomSelect
-              instanceId="firstName-select"
-                inputId="authorsName"
-                name="authorsName"
-                options={lastnameOptions}
-                isMulti
-                placeholder="Enter Author name"
-                value={formik.values.authorsName}
-                onChange={(value) => formik.setFieldValue("authorsName", value)}
-              />
-              {formik.touched.authorsName && formik.errors.authorsName ? <div className="text-red-500 text-sm">{formik.errors.authorsName}</div> : null}
-            </div>
               <YearComponent />
             </div>
             
             <div className="text-left flex flex-col">
               <div className="flex">
-                <label className="text-[16px]  text-[#333]" htmlFor="articleName">
+                <label className="text-[16px]  text-[#333] mb-[10px]" htmlFor="articleName">
                   Start typing Articles's Name (You can select multiple Articles)
                 </label>
                 <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>

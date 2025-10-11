@@ -48,7 +48,7 @@ const CustomSelect = ({
     control: (base) => ({
       ...base,
       backgroundColor: "#F1F5FF",
-      padding: "16px",
+      padding: "10px",
       border: "none",
       boxShadow: "none",
       minHeight: "auto",

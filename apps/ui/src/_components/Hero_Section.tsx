@@ -29,7 +29,7 @@ export default function Hero_Section() {
       <div className="relative h-[568px] w-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: "url('/Hero_Frame.png')" }}>
         {/* <Image className="object-cover z-0 relative" src="/Hero_Frame.png" width={1920} height={568} alt="Hero Frame" /> */}
         <div className="absolute md:top-[150px] top-[100px] flex flex-col  items-center justify-center mx-auto">
-          {!searchClicked && <p className="rounded-[56px] bg-[linear-gradient(358deg,#9990E5_-30.8%,rgba(169,202,209,0.26)_96.38%)] text-[16px] p-[12px]">By {active}</p>}
+          {!searchClicked && <p className="rounded-[56px] bg-[linear-gradient(358deg,#9990E5_-30.8%,rgba(169,202,209,0.26)_96.38%)] text-[16px] p-[12px]">By {active.split("S").join(" S")}</p>}
 
 
           <motion.div

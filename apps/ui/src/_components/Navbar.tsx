@@ -22,15 +22,16 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
     { id: 0, name: "Search by Author", key: "Author" },
     { id: 1, name: "Search by Article", key: "Article" },
     { id: 2, name: "Advance Search", key: "AdvancedSearch" },
-    { id: 3, name: "Blogs", key: "blogs" },
+    { id: 3, name: "Blogs", key: "Blogs" },
   ]
 
 
   const handleClick = async (key: string) => {
-    if (key === 'blogs') {
-      router.push('/blogs')
+    setActive(key)
+    if (key === 'Blogs') {
+      router.push('/Blogs')
     } else {
-      setActive(key)
+      
       setSearchClicked(false)
 
       if (window.location.pathname !== '/') {
@@ -58,7 +59,7 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
         {navElements.map((element) => (
           <button
             key={element.id}
-            className="text-white hidden md:block flex-1 text-center cursor-pointer"
+            className="text-white hidden md:block flex-1 text-[18px] text-center cursor-pointer"
             onClick={() => handleClick(element.key)}
 
           >
@@ -75,13 +76,13 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
         ))}
 
 
-        <div className="flex-[2]">
+        <div className="flex-[3]">
           <Searchbar />
         </div>
       </div>
       {/* mobile Navbar */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#1B212E] flex flex-col px-6 py-4 gap-4">
+        <div className="md:hidden bg-[#1B212E] flex flex-col px-[25px] py-[18px] gap-4">
           {navElements.map((element) => (
             <button
               key={element.id}
