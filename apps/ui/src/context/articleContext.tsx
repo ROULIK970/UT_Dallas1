@@ -13,6 +13,11 @@ interface FormValues {
   authorsName: string[]
 }
 
+interface Author {
+  firstName: string
+  lastName: string
+}
+
 interface Article {
   id: number
   documentId: string
@@ -21,7 +26,7 @@ interface Article {
   volume: string
   journalName: string
   journalAbbreviation: string
-  author: string[]
+  author: Author[]  
 }
 
 interface ArticleSearchContextType {

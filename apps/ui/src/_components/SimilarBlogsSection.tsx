@@ -14,12 +14,12 @@ export default function SimilarBlogsSection() {
       <h1 className='text-[#1D2A49] text-[18px] md:text-[28px] font-[600] mb-[30px]'>Similar Blogs</h1>
       {
         blogCategories.map((category, index) => (
-          <button key={index} className='border border-[#D1D5DC] rounded-[45.75px] text-[9px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2'>{category}</button>
+          <button key={index} className='border cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2'>{category}</button>
         ))
       }
 
 
-      <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mt-[70px]'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-[70px]'>
         {getBlogsInfo.map((blog, index) => (
           <Link href={`/blogs/${blog.slug}`} key={index} className='rounded-[10px] border mb-[20px] border-[rgba(68,98,169,0.2)] bg-white shadow-[0_4px_20px_0_rgba(153,86,236,0.08)] transform transition-all duration-300 ease-in-out grayscale hover:grayscale-0 hover:scale-105'>
             <img src={blog.img} alt='featured-img' className='w-full h-auto col-span-1' />

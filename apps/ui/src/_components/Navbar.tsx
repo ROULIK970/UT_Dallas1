@@ -27,9 +27,10 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
 
 
   const handleClick = async (key: string) => {
+
     setActive(key)
     if (key === 'Blogs') {
-      router.push('/Blogs')
+      router.push('/blogs')
     } else {
       
       setSearchClicked(false)
@@ -50,12 +51,29 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
         }
       }
     }
+    setMobileMenuOpen(false)
   }
 
   return (
     <>
-      {/* desktop navbar */}
-      <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
+     
+      
+      {/* mobile Navbar */}
+      {mobileMenuOpen ? (
+        <div className="md:hidden bg-white mt-[-20px] text-[#2A2A2A] flex flex-col px-[25px] py-[18px] gap-4">
+          {navElements.map((element) => (
+            <button
+              key={element.id}
+              className="text-left text-sm border-b border-[#E5E7EB]"
+              onClick={() => handleClick(element.key)}
+            >
+              {element.name}
+            </button>
+          ))}
+
+        </div>
+      ): (
+        <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
         {navElements.map((element) => (
           <button
             key={element.id}
@@ -80,20 +98,6 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
           <Searchbar />
         </div>
       </div>
-      {/* mobile Navbar */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#1B212E] flex flex-col px-[25px] py-[18px] gap-4">
-          {navElements.map((element) => (
-            <button
-              key={element.id}
-              className="text-white text-left text-sm"
-              onClick={() => handleClick(element.key)}
-            >
-              {element.name}
-            </button>
-          ))}
-
-        </div>
       )}
     </>
 

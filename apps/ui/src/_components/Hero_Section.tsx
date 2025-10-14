@@ -1,4 +1,5 @@
 "use client"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import SearchByForm from "./SearchByForm"
 import { useNav } from "@/context/NavContext"
@@ -10,7 +11,46 @@ import ResultsSection from "./ResultsSection"
 export default function Hero_Section() {
 
 
-  const { searchClicked, setSearchClicked } = useArticleSearch()
+  const { searchClicked } = useArticleSearch()
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
+
+
+useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  
+  let yValue = 0
+  let scaleValue = 1
+
+  if (searchClicked) {
+    if(windowWidth >= 1536){
+      yValue=-390
+      scaleValue=0.6
+    }
+    else if(windowWidth >= 1280){
+      yValue = -390
+      scaleValue = 0.6
+    }
+    else if (windowWidth >= 1024) {
+      yValue = -440
+      scaleValue = 0.4
+    }
+    else if(windowWidth >= 837){
+      yValue = -440
+      scaleValue = 0.4
+    } 
+    else if (windowWidth >= 768) {
+      yValue = -480
+      scaleValue = 0.3
+    } 
+    else{
+      yValue = 0
+      scaleValue=0
+    }
+  }
 
 
 
@@ -33,10 +73,7 @@ export default function Hero_Section() {
 
 
           <motion.div
-            animate={{
-              y: searchClicked && window.innerWidth >= 768 ? -390 : 0,
-              scale: searchClicked ? 0.6 : 1,
-            }}
+            animate={{ y: searchClicked ? yValue : 0, scale: searchClicked ? scaleValue : 1 }}
             transition={{ type: "spring", stiffness: 50, damping: 30 }}
             className="text-center max-w-[80%] mx-auto"
           >

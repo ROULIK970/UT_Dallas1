@@ -1,14 +1,14 @@
 import React from 'react'
 import Image from 'next/image'
-import { div } from 'framer-motion/client'
+import { div, p } from 'framer-motion/client'
 import { useArticleSearch } from '@/context/articleContext'
 
 export default function ResultsSection() {
 
-    const {articles} = useArticleSearch()
-    console.log(articles)
+  const { articles } = useArticleSearch()
+  console.log(articles)
 
-  
+
   return (
     <>
       {articles.length ? (
@@ -19,7 +19,7 @@ export default function ResultsSection() {
               <p className="text-[#4A5565] text-[14px]">
                 Found {articles.length} articles matching your criteria
               </p>
-              
+
             </div>
             <div className="flex-[0.3] flex items-center gap-4 md:justify-end">
               <p className="text-center text-[#364153] text-[12.3px]">Sort By:</p>
@@ -32,26 +32,34 @@ export default function ResultsSection() {
           {articles.map((article) => (
             <div
               key={article.id}
-              className="rounded-[14px] border border-[#E5E7EB] bg-white mt-3 mb-3 pt-[21.22px] pr-[21.889px] pb-[21.89px] pl-[21.889px]"
+              className="rounded-[14px] border w-full  border-[#E5E7EB] bg-white mt-3 mb-3 pt-[21.22px] pr-[21.889px] pb-[21.89px] pl-[21.889px]"
             >
-              <div className="md:flex gap-3">
-                <div>
-                  <h1 className="text-[#101828] text-[15.8px]">{article.title}</h1>
-                  <p>{article.year}</p>
-                  <div className="flex mt-3 gap-2">
-                    {article.author?.map((a, index) => (
-                      <div key={index}>
-                        <p className="text-[12.3px] text-[#4A5565]">
-                          {a.firstName} {a.lastName}
-                        </p>
-                        
+              <div className="md:flex flex-col gap-3">
+
+                <h1 className="text-[#101828] text-[15.8px] font-bold">{article.journalName}</h1>
+                <div className='flex md:flex-row flex-col md:gap-9 text-[#4A5565] text-[14px]'>
+                  <p>Article : {article.title}</p>
+                  <p>Journal Abbreviation : {article.journalAbbreviation}</p>
+                  <div className='flex gap-2'>
+                    <Image src="/calendar.svg" width={14} height={14} alt="calendar" />
+                    <p>2024</p>
+                  </div>
+                  <p>Volume: {article.volume}</p>
+                </div>
+
+                <div className='flex gap-2 text-[#4A5565] text-[16px]'>
+                  <p>Authors :</p> 
+                  <div className='flex flex-wrap md:flex-row flex-col md:gap-3'>
+                    {article.author.map((a, i) => (
+                      <div className='flex'>
+                        <p>{a.firstName}</p>
+                        <p>{a.lastName},</p>
                       </div>
+
                     ))}
                   </div>
-                  <p className="text-[#4A5565] text-[14px] mb-3">
-                    {article.journalName}
-                  </p>
                 </div>
+
               </div>
             </div>
           ))}
@@ -63,5 +71,5 @@ export default function ResultsSection() {
   )
 }
 
-    
+
 

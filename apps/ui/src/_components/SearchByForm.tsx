@@ -43,7 +43,7 @@ useEffect(() => {
 
 
 const YearComponent = () => (
-  <div className="flex flex-col  text-left flex-1 md:flex-[0.5] ">
+  <div className="flex flex-col md:max-w-[45%] text-left flex-1 md:flex-[0.5] ">
     <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
       Select the year range
     </label>
@@ -170,13 +170,13 @@ const YearComponent = () => (
         {/* Authors form */}
         {active === "Author" && (
           <div className=" flex flex-col gap-6">
-            <div className="md:flex  gap-6 ">
+            <div className="2xl:flex  gap-6 ">
               <div className="text-left flex-1">
                 <div className="flex">
                   <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
                     Author's First Name (You can select multiple Authors)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                 <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span> 
                 </div>
 
                 <CustomSelect
@@ -247,7 +247,7 @@ const YearComponent = () => (
 
         {active === "Article" && (
           <div className="flex flex-col gap-3">
-            <div className="flex md:flex-row flex-col gap-6">
+            <div className="2xl:flex  md:flex-row flex-col gap-6">
               <div className="text-left flex flex-col flex-2">
                 <div className="flex">
                   <label className="text-[16px] flex-1 mb-[10px] text-[#333]" htmlFor="articleName">
@@ -304,9 +304,9 @@ const YearComponent = () => (
 
         {active === "AdvancedSearch" && (
           <div className="flex  flex-col gap-3">
-            <div className="flex md:flex-row flex-col gap-6">
+            <div className="2xl:flex md:flex-row flex-col gap-6">
               
-              {/* Year Range */}
+   
               <div className="text-left flex-1">
                 <div className="flex">
                   <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
@@ -364,7 +364,7 @@ const YearComponent = () => (
               instanceId="firstName-select"
                 inputId="articleName"
                 name="articleName"
-                options={lastnameOptions}
+                options={articleOptions}
                 isMulti
                 placeholder="Enter article name"
                 value={formik.values.articleName}
@@ -378,8 +378,8 @@ const YearComponent = () => (
         <button
           type="submit"
           className={`absolute md:bottom-[-30px] bottom-[-21px] cursor-pointer left-1/2 -translate-x-1/2 
-             rounded-[9px] ${searchClicked ? "bg-[#3B3098]" : "bg-[#E1E3E8]"} ${searchClicked ? "text-white" : "text-[#1B212E]"}
-             md:text-[20px] text-[10px] md:py-[10px] py-[6px] md:px-[180px] px-[50px]`}
+             rounded-[9px] ${searchClicked ? "bg-[#3B3098] text-white" : "bg-[#E1E3E8] text-[#1B212E]"} 
+             md:text-[20px] w-full md:w-auto text-[13px] md:py-[10px] py-[6px] md:px-[180px] px-[50px]`}
         >
           SEARCH
         </button>

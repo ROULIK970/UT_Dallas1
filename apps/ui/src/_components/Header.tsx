@@ -7,30 +7,34 @@ import Link from 'next/link'
 
 export default function Header() {
 
-   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
 
-   console.log(mobileMenuOpen)
+  console.log(mobileMenuOpen)
   return (
     <div>
-      <div className="flex justify-between items-center h-[124px] px-6 bg-white">
-
+      <div className="flex  justify-between items-center h-[124px] px-6 bg-white">
 
 
         <div className="relative w-[140px] md:w-[222px] h-[124px]">
           <Link href="/">
-          <Image
-            src="/FinerPlanet_logo.png"
-            alt="Finer Planet"
-            fill
-            className="object-contain"
-          />
+            <Image
+              src="/FinerPlanet_logo.png"
+              alt="Finer Planet"
+              fill
+              className="object-contain"
+            />
           </Link>
-          
-        </div>
 
-         <Image src='/hamburger-icon.svg' alt='menu' height={24} width={24} className='md:hidden block' onClick={() => setMobileMenuOpen(prev => !prev)}/>
-      
+        </div>
+        {mobileMenuOpen ? (
+          <Image src='/close-hamburger.svg' alt='menu' height={24} width={24} className='md:hidden block' onClick={() => setMobileMenuOpen(prev => !prev)} />
+        ) : (
+          <Image src='/hamburger-icon.svg' alt='menu' height={24} width={24} className='md:hidden block' onClick={() => setMobileMenuOpen(prev => !prev)} />
+        )}
+
+
+
         <div className="hidden md:block relative w-[222px] h-[124px]">
           <Image
             src="/Sponsor_logo.png"
@@ -40,7 +44,7 @@ export default function Header() {
           />
         </div>
 
-        
+
       </div>
       <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
     </div>

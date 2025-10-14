@@ -66,7 +66,7 @@ const CommentSection = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex w-[245px] ml-auto px-[20px] py-[16px] justify-center items-center gap-[10px] rounded-[9px] border border-[#979797] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333] disabled:opacity-50"
+              className="cursor-pointer flex w-[245px] ml-auto px-[20px] py-[16px] justify-center items-center gap-[10px] rounded-[9px] border border-[#979797] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333] disabled:opacity-50"
             >
               {isSubmitting ? "Posting..." : "Post a Comment"}
             </button>
