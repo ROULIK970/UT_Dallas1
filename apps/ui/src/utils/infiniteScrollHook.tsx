@@ -1,35 +1,32 @@
 import { useEffect, useRef } from "react";
 
-interface UseInfiniteScrollProps<T extends HTMLElement> {
-  containerRef: React.RefObject<T | null>;
+interface UseInfiniteScrollProps {
   hasMore: boolean;
   loading: boolean;
-  offset?: number; 
+  offset?: number;
   onLoadMore: () => Promise<void> | void;
 }
 
-export function useInfiniteScroll<T extends HTMLDivElement>({
-  containerRef,
+export function useInfiniteScroll({
   hasMore,
   loading,
   offset = 200,
   onLoadMore,
-}: UseInfiniteScrollProps<T>) {
+}: UseInfiniteScrollProps) {
   const triggeredRef = useRef(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     let ticking = false;
 
     const checkScroll = async () => {
       if (loading || !hasMore || triggeredRef.current) return;
 
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      const distanceFromBottom = scrollHeight - (scrollTop + clientHeight);
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
 
-      // Trigger when within offset of bottom
+      const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
+
       if (distanceFromBottom <= offset) {
         triggeredRef.current = true;
         try {
@@ -50,10 +47,10 @@ export function useInfiniteScroll<T extends HTMLDivElement>({
       }
     };
 
-    container.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [containerRef, hasMore, loading, offset, onLoadMore]);
+  }, [hasMore, loading, offset, onLoadMore]);
 }

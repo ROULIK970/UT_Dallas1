@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { apiClient } from '../lib/apiClient'
+import { apiClient } from '../lib/lib/apiClient'
 
 type Filters = {
   firstName?: string[]
@@ -55,20 +54,35 @@ export const getArticlesByFiltering = async (
 
     if (yearStart) query.push(`filters[year][$gte]=${yearStart}`)
     if (yearEnd) query.push(`filters[year][$lte]=${yearEnd}`)
-    if (journal.length) query.push(`filters[journalName][$in]=${journal.map(j => encodeURIComponent(j)).join(',')}`)
-    if (articleName.length) query.push(`filters[title][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)
-    // if(authorsName.length) query.push(`filters[author][last][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)//check
-    if (lastName.length) query.push(`filters[author][lastName][$in]=${lastName.map(l => encodeURIComponent(l)).join(',')}`)
-    if (firstName.length) query.push(`filters[author][firstName][$in]=${firstName.map(f => encodeURIComponent(f)).join(',')}`)
-
     if (journal.length) {
-      query.push(
-        `filters[journalName][$in]=${journal.map(j => encodeURIComponent(j)).join(',')}`
-      );
+      journal.forEach((j, index) => {
+        query.push(`filters[journalName][$in][${index}]=${encodeURIComponent(j)}`)
+      })
     }
-    if (isLatest) {
-      query.push('sort[0]=createdAt:desc');
+    if (articleName.length) {
+      articleName.forEach((a, index) => {
+        query.push(`filters[title][$in][${index}]=${encodeURIComponent(a)}`)
+      })
     }
+    // if(authorsName.length) query.push(`filters[author][last][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)//check
+    if (lastName.length) {
+      lastName.forEach((l, index) => {
+        query.push(`filters[author][lastName][$in][${index}]=${encodeURIComponent(l)}`)
+      })
+    }
+
+    if (firstName.length) {
+      firstName.forEach((f, index) => {
+        query.push(`filters[author][firstName][$in][${index}]=${encodeURIComponent(f)}`)
+      })
+    }
+
+
+    isLatest ? query.push('sort[0]=year:desc'): query.push('sort[0]=year:asc')
+    
+
+
+
     const queryString = query.join('&')
 
 
@@ -105,15 +119,15 @@ export async function getFilterOptions() {
     const journals = new Set<string>()
     const articleTitles = new Set<string>()
 
-    // Loop through all articles
+
     articles.forEach((article: any) => {
-      // Add article title
+
       if (article.title) articleTitles.add(article.title)
 
-      // Add journal name
+
       if (article.journalName) journals.add(article.journalName)
 
-      // Add author first/last names
+
       if (Array.isArray(article.author)) {
         article.author.forEach((a: any) => {
           if (a.firstName) firstNames.add(a.firstName)
@@ -122,7 +136,7 @@ export async function getFilterOptions() {
       }
     })
 
-    // Convert sets to arrays suitable for react-select or custom selects
+
     return {
       firstNameOptions: Array.from(firstNames).map(v => ({ value: v, label: v })),
       lastNameOptions: Array.from(lastNames).map(v => ({ value: v, label: v })),

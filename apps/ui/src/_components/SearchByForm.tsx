@@ -6,104 +6,104 @@ import { useNav } from "@/context/NavContext"
 import CustomSelect from "./CustomSelect"
 import { useArticleSearch } from "@/context/articleContext"
 import Image from "next/image"
-import { getFilterOptions } from "@/api/lib/services/articles.service"
+import { getFilterOptions } from "@/api/services/articles.service"
 
 export default function SearchByForm() {
 
-const [firstnameOptions, setFirstnameOptions] = useState<{value: string, label: string}[]>([])
-const [lastnameOptions, setLastnameOptions] = useState<{value: string, label: string}[]>([])
-const [journalOptions, setJournalOptions] = useState<{value: string, label: string}[]>([])
-const [articleOptions, setArticleOptions] = useState<{value: string, label: string}[]>([])
+  const [firstnameOptions, setFirstnameOptions] = useState<{ value: string, label: string }[]>([])
+  const [lastnameOptions, setLastnameOptions] = useState<{ value: string, label: string }[]>([])
+  const [journalOptions, setJournalOptions] = useState<{ value: string, label: string }[]>([])
+  const [articleOptions, setArticleOptions] = useState<{ value: string, label: string }[]>([])
 
-useEffect(() => {
-  async function fetchOptions() {
-    const data = await getFilterOptions()
-    setFirstnameOptions(data.firstNameOptions)
-    setLastnameOptions(data.lastNameOptions)
-    setJournalOptions(data.journalOptions)
-    setArticleOptions(data.articleNameOptions)
-  }
-  fetchOptions()
-}, [])
+  useEffect(() => {
+    async function fetchOptions() {
+      const data = await getFilterOptions()
+      setFirstnameOptions(data.firstNameOptions)
+      setLastnameOptions(data.lastNameOptions)
+      setJournalOptions(data.journalOptions)
+      setArticleOptions(data.articleNameOptions)
+    }
+    fetchOptions()
+  }, [])
 
   const { active } = useNav()
-  const {fetchArticles, searchClicked, setSearchClicked } = useArticleSearch()
- const [yearOptions, setYearOptions] = useState<number[]>([])
+  const { fetchArticles, searchClicked, setSearchClicked } = useArticleSearch()
+  const [yearOptions, setYearOptions] = useState<number[]>([])
 
-useEffect(() => {
-  const currentYear = new Date().getFullYear()
-  const years = []
-  for (let year = currentYear; year >= 1900; year--) {
-    years.push(year)
-  }
-  setYearOptions(years)
-}, [])
-
- 
+  useEffect(() => {
+    const currentYear = new Date().getFullYear()
+    const years = []
+    for (let year = currentYear; year >= 1900; year--) {
+      years.push(year)
+    }
+    setYearOptions(years)
+  }, [])
 
 
-const YearComponent = () => (
-  <div className="flex flex-col md:max-w-[45%] text-left flex-1 md:flex-[0.5] ">
-    <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
-      Select the year range
-    </label>
 
-    <div className="flex items-center border rounded-lg overflow-hidden p-[10px] bg-[#F1F5FF]">
-      {/* Start Year */}
-      <div className="flex items-center md:px-3 py-2 flex-1">
-        <Image src="/calendar.svg" alt="start-year-icon" width={18.5} height={18.5} className="mr-2" />
-        <select
-          id="yearStart"
-          name="yearStart"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.yearStart}
-          className="w-full bg-transparent outline-none text-[#000]"
-        >
-          <option value="">1990</option>
-          {yearOptions.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
+
+  const YearComponent = () => (
+    <div className="flex flex-col md:max-w-[45%] text-left flex-1 md:flex-[0.5] ">
+      <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
+        Select the year range
+      </label>
+
+      <div className="flex items-center border rounded-lg overflow-hidden p-[10px] bg-[#F1F5FF]">
+        {/* Start Year */}
+        <div className="flex items-center md:px-3 py-2 flex-1">
+          <Image src="/calendar.svg" alt="start-year-icon" width={18.5} height={18.5} className="mr-2" />
+          <select
+            id="yearStart"
+            name="yearStart"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.yearStart}
+            className="w-full bg-transparent outline-none text-[#000]"
+          >
+            <option value="">1990</option>
+            {yearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+
+
+        <div className="h-[65%] w-px bg-[#D1D5DB] mx-2" />
+
+        {/* End Year */}
+        <div className="flex items-center md:px-3 py-2 flex-1">
+          <Image src="/calendar.svg" alt="end-year-icon" width={18.5} height={18.5} className="mr-2" />
+          <select
+            id="yearEnd"
+            name="yearEnd"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.yearEnd}
+            className="w-full bg-transparent  text-[#000]"
+          >
+            <option value="">2025</option>
+            {yearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      
-      <div className="h-[65%] w-px bg-[#D1D5DB] mx-2" />
-
-      {/* End Year */}
-      <div className="flex items-center md:px-3 py-2 flex-1">
-        <Image src="/calendar.svg" alt="end-year-icon" width={18.5} height={18.5} className="mr-2" />
-        <select
-          id="yearEnd"
-          name="yearEnd"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.yearEnd}
-          className="w-full bg-transparent  text-[#000]"
-        >
-          <option value="">2025</option>
-          {yearOptions.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
+      {/* Error messages below */}
+      <div className="flex gap-2 mt-1">
+        {formik.touched.yearStart && formik.errors.yearStart && (
+          <div className="text-red-500 text-sm flex-1">{formik.errors.yearStart}</div>
+        )}
+        {formik.touched.yearEnd && formik.errors.yearEnd && (
+          <div className="text-red-500 text-sm flex-1">{formik.errors.yearEnd}</div>
+        )}
       </div>
     </div>
-
-    {/* Error messages below */}
-    <div className="flex gap-2 mt-1">
-      {formik.touched.yearStart && formik.errors.yearStart && (
-        <div className="text-red-500 text-sm flex-1">{formik.errors.yearStart}</div>
-      )}
-      {formik.touched.yearEnd && formik.errors.yearEnd && (
-        <div className="text-red-500 text-sm flex-1">{formik.errors.yearEnd}</div>
-      )}
-    </div>
-  </div>
-)
+  )
 
 
   interface FormValues {
@@ -117,7 +117,7 @@ const YearComponent = () => (
     authorsName: string[]
   }
 
- 
+
 
 
 
@@ -176,11 +176,11 @@ const YearComponent = () => (
                   <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
                     Author's First Name (You can select multiple Authors)
                   </label>
-                 <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span> 
+                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
                 </div>
 
                 <CustomSelect
-                instanceId="firstName-select"
+                  instanceId="firstName-select"
                   name="firstName"
                   inputId="firstName"
                   options={firstnameOptions}
@@ -202,7 +202,7 @@ const YearComponent = () => (
                 </div>
 
                 <CustomSelect
-                instanceId="firstName-select"
+                  instanceId="firstName-select"
                   inputId="lastName"
                   name="lastName"
                   options={lastnameOptions}
@@ -226,7 +226,7 @@ const YearComponent = () => (
                 <span className="text-black"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span></div>
 
               <CustomSelect
-              instanceId="firstName-select"             
+                instanceId="firstName-select"
                 name="journal"
                 inputId="journals"
                 options={journalOptions}
@@ -257,7 +257,7 @@ const YearComponent = () => (
 
 
                 <CustomSelect
-                instanceId="firstName-select"
+                  instanceId="firstName-select"
                   inputId="articleName"
                   name="articleName"
                   options={articleOptions}
@@ -284,7 +284,7 @@ const YearComponent = () => (
               </div>
 
               <CustomSelect
-              instanceId="firstName-select"
+                instanceId="firstName-select"
                 name="journal"
                 inputId="journal"
                 options={journalOptions}
@@ -305,8 +305,8 @@ const YearComponent = () => (
         {active === "AdvancedSearch" && (
           <div className="flex  flex-col gap-3">
             <div className="2xl:flex md:flex-row flex-col gap-6">
-              
-   
+
+
               <div className="text-left flex-1">
                 <div className="flex">
                   <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
@@ -316,7 +316,7 @@ const YearComponent = () => (
                 </div>
 
                 <CustomSelect
-                instanceId="firstName-select"
+                  instanceId="firstName-select"
                   name="firstName"
                   inputId="firstName"
                   options={firstnameOptions}
@@ -338,7 +338,7 @@ const YearComponent = () => (
                 </div>
 
                 <CustomSelect
-                instanceId="firstName-select"
+                  instanceId="firstName-select"
                   inputId="lastName"
                   name="lastName"
                   options={lastnameOptions}
@@ -351,7 +351,7 @@ const YearComponent = () => (
               </div>
               <YearComponent />
             </div>
-            
+
             <div className="text-left flex flex-col">
               <div className="flex">
                 <label className="text-[16px]  text-[#333] mb-[10px]" htmlFor="articleName">
@@ -361,7 +361,7 @@ const YearComponent = () => (
               </div>
 
               <CustomSelect
-              instanceId="firstName-select"
+                instanceId="firstName-select"
                 inputId="articleName"
                 name="articleName"
                 options={articleOptions}
