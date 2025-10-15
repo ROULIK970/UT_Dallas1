@@ -1,50 +1,94 @@
 import axios from 'axios'
-import { apiClient, basePath } from '../lib/apiClient'
+import { apiClient } from '../lib/apiClient'
 
 type Filters = {
-    firstName?: string[]
-    lastName?: string[]
-    yearStart?: string
-    yearEnd?: string
-    journal?: string[]
-    articleName?: string[]
-    universityName?: string[]
-    authorsName?: string[]
+  firstName?: string[]
+  lastName?: string[]
+  yearStart?: string
+  yearEnd?: string
+  journal?: string[]
+  articleName?: string[]
+  universityName?: string[]
+  authorsName?: string[]
+}
+
+interface Pagination {
+  page: number
+  pageSize: number
+  pageCount: number
+  total: number
+}
+
+interface Author {
+  firstName: string
+  lastName: string
+}
+
+interface Article {
+  id: number
+  documentId: string
+  title: string
+  year: number
+  volume: string
+  journalName: string
+  journalAbbreviation: string
+  author: Author[]
 }
 
 
-export const getArticlesByFiltering = async (filters: Filters = {}) => {
-    try {
-        const { firstName = [], lastName = [], yearStart, yearEnd, journal = [], articleName = [], universityName = [], authorsName = [] } = filters
+export const getArticlesByFiltering = async (
+  filters: Filters = {},
+  page: number = 1,
+  pageSize = 25,
+  isLatest = false
+): Promise<{ articles: Article[]; pagination: Pagination }> => {
+  try {
+    const { firstName = [], lastName = [], yearStart, yearEnd, journal = [], articleName = [] } = filters
 
-        const query = []
-
-        query.push('populate=author')
-//split firstName Lastname form in authors field
-//remove university Name
-        if (yearStart) query.push(`filters[year][$gte]=${yearStart}`)
-        if (yearEnd) query.push(`filters[year][$lte]=${yearEnd}`)
-        if (journal.length) query.push(`filters[journalName][$in]=${journal.map(j => encodeURIComponent(j)).join(',')}`)
-        if (articleName.length) query.push(`filters[title][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)
-            // if(authorsName.length) query.push(`filters[author][last][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)//check
-        if(lastName.length) query.push(`filters[author][lastName][$in]=${lastName.map(l => encodeURIComponent(l)).join(',')}`)
-        if(firstName.length) query.push(`filters[author][firstName][$in]=${firstName.map(f => encodeURIComponent(f)).join(',')}`)
-
-            const queryString = query.join('&')
-            
-
-            const res = await apiClient.get(`articles?${queryString}`)
-            console.log(res)
-
-            const articlesData = res.data.data;
-
-return articlesData
-        
+    const query = []
 
 
-    } catch (error) {
-        console.log(error)
+    query.push('populate=author')
+    query.push(`pagination[page]=${page}`)
+    query.push(`pagination[pageSize]=${pageSize}`)
+
+
+    if (yearStart) query.push(`filters[year][$gte]=${yearStart}`)
+    if (yearEnd) query.push(`filters[year][$lte]=${yearEnd}`)
+    if (journal.length) query.push(`filters[journalName][$in]=${journal.map(j => encodeURIComponent(j)).join(',')}`)
+    if (articleName.length) query.push(`filters[title][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)
+    // if(authorsName.length) query.push(`filters[author][last][$in]=${articleName.map(a => encodeURIComponent(a)).join(',')}`)//check
+    if (lastName.length) query.push(`filters[author][lastName][$in]=${lastName.map(l => encodeURIComponent(l)).join(',')}`)
+    if (firstName.length) query.push(`filters[author][firstName][$in]=${firstName.map(f => encodeURIComponent(f)).join(',')}`)
+
+    if (journal.length) {
+      query.push(
+        `filters[journalName][$in]=${journal.map(j => encodeURIComponent(j)).join(',')}`
+      );
     }
+    if (isLatest) {
+      query.push('sort[0]=createdAt:desc');
+    }
+    const queryString = query.join('&')
+
+
+    const res = await apiClient.get(`articles?${queryString}`)
+    console.log(res)
+
+    const articlesData = res.data.data;
+    const pagination = res.data.meta.pagination
+
+    return {
+      articles: articlesData,
+      pagination,
+    }
+
+
+
+  } catch (error: any) {
+    console.log(error)
+    throw new Error(error.message || "Failed to fetch articles")
+  }
 }
 
 

@@ -123,17 +123,17 @@ const YearComponent = () => (
 
   const validationSchemaMap: Record<string, Yup.ObjectSchema<any>> = {
     Author: Yup.object({
-      firstName: Yup.array().min(1, "Select at least one first name").required("Required"),
-      lastName: Yup.array().min(1, "Select at least one last name").required("Required"),
+      firstName: Yup.array(),
+      lastName: Yup.array(),
       yearStart: Yup.date().required("Start Year Required"),
       yearEnd: Yup.date().required("End Year Required"),
-      journal: Yup.array().min(1, "Select at least one journal").required("Journal Name required"),
+      journal: Yup.array(),
     }),
     Article: Yup.object({
-      articleName: Yup.array().min(1, "Select at least one article name").required("Required"),
+      articleName: Yup.array(),
       yearStart: Yup.date().required("Start Year Required"),
       yearEnd: Yup.date().required("End Year Required"),
-      journal: Yup.array().min(1, "Select at least one journal").required("Journal Name required"),
+      journal: Yup.array(),
     }),
     AdvancedSearch: Yup.object({
       universityName: Yup.array().min(1, "Select at least one university name").required("Required"),
