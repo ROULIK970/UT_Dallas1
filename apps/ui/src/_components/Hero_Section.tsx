@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+
 import Image from "next/image"
 import SearchByForm from "./SearchByForm"
 import { useNav } from "@/context/NavContext"
@@ -12,45 +12,6 @@ export default function Hero_Section() {
 
 
   const { searchClicked } = useArticleSearch()
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
-
-
-useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth)
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  
-  let yValue = 0
-  let scaleValue = 1
-
-  if (searchClicked) {
-    if(windowWidth >= 1536){
-      yValue=-390
-      scaleValue=0.6
-    }
-    else if(windowWidth >= 1280){
-      yValue = -390
-      scaleValue = 0.6
-    }
-    else if (windowWidth >= 1024) {
-      yValue = -440
-      scaleValue = 0.4
-    }
-    else if(windowWidth >= 837){
-      yValue = -440
-      scaleValue = 0.4
-    } 
-    else if (windowWidth >= 768) {
-      yValue = -480
-      scaleValue = 0.3
-    } 
-    else{
-      yValue = 0
-      scaleValue=0
-    }
-  }
 
 
 
@@ -72,16 +33,13 @@ useEffect(() => {
           {!searchClicked && <p className="rounded-[56px] bg-[linear-gradient(358deg,#9990E5_-30.8%,rgba(169,202,209,0.26)_96.38%)] text-[16px] p-[12px]">By {active.split("S").join(" S")}</p>}
 
 
-          <motion.div
-            animate={{ y: searchClicked ? yValue : 0, scale: searchClicked ? scaleValue : 1 }}
-            transition={{ type: "spring", stiffness: 50, damping: 30 }}
-            className="text-center max-w-[80%] mx-auto"
-          >
-            <h1 className="text-[30px] md:text-[64px] font-bold">
-              The Finerplanet Top 100 Business School Research Rankings™
-            </h1>
-            <div className="bg-gradient-to-r from-[#3B3098] to-[#00A649] w-[75px] h-[2.3px] mb-[20px] mx-auto" />
-          </motion.div>
+
+
+          <h1 className="text-[30px] md:text-[64px] font-bold text-center max-w-[80%] mx-auto">
+            The Finerplanet Top 100 Business School Research Rankings™
+          </h1>
+          <div className="bg-gradient-to-r from-[#3B3098] to-[#00A649] w-[75px] h-[2.3px] mb-[20px] mx-auto" />
+
 
 
 
@@ -107,7 +65,10 @@ useEffect(() => {
 
       <motion.div
         animate={{ y: searchClicked ? -390 : 0, }}
-        transition={{ type: "spring", stiffness: 50, damping: 30 }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut",
+        }}
         className="absolute mt-[-100px] w-full md:px-26 px-4  z-40"
       >
 

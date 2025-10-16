@@ -1,10 +1,12 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import staticData from '@/data/staticData.json'
 import Link from 'next/link'
 import Image from 'next/image'
 
 
 export default function SimilarBlogsSection() {
+  const [active, setActive] = useState("All")
   const getBlogsInfo = staticData.blogs.similarBlogs
 
   const blogCategories = ["All", "Research", "Rankings", "News"]
@@ -13,9 +15,12 @@ export default function SimilarBlogsSection() {
     <div className='mt-[50px]'>
       <h1 className='text-[#1D2A49] text-[18px] md:text-[28px] font-[600] mb-[30px]'>Similar Blogs</h1>
       {
-        blogCategories.map((category, index) => (
-          <button key={index} className='border cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2'>{category}</button>
-        ))
+        blogCategories.map((category, index) => {
+          const isActive = category === active
+         return <button key={index} onClick={() => setActive(category)} className={`${isActive ? "bg-[#3B3098] text-white":""} cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:border-2  hover:border-purple-600 border-2  border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2`}>{category}</button>
+        } 
+          
+        )
       }
 
 

@@ -158,7 +158,6 @@ export default function SearchByForm() {
     validationSchema: validationSchemaMap[active],
 
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2))
       setSearchClicked(true)
       await fetchArticles(values)
     },

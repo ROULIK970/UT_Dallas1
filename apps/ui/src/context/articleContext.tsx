@@ -34,7 +34,7 @@ interface ArticleSearchContextType {
   articles: Article[]
   isLoading: boolean
   error: string | null
-  fetchArticles: (filtersParam?: FormValues, loadMore?: boolean) => Promise<void>
+  fetchArticles: (filtersParam?: FormValues, loadMore?: boolean,isLatest?: boolean) => Promise<void>
   searchClicked: boolean
   setSearchClicked: (value: boolean) => void
   hasMore: boolean
@@ -64,36 +64,36 @@ export function ArticleSearchProvider({ children }: { children: ReactNode }) {
 
 
 
-  const fetchArticles = async (filtersParam?: FormValues, loadMore = false, isLatest: boolean = false) => {
-    try {
-      setIsLoading(true)
-      const currentPage = loadMore ? page + 1 : 1
-      console.log(loadMore)
-      setError(null)
+    const fetchArticles = async (filtersParam?: FormValues, loadMore = false, isLatest: boolean = false) => {
+      try {
+        setIsLoading(true)
+        const currentPage = loadMore ? page + 1 : 1
+        console.log(loadMore)
+        setError(null)
 
-      
- const activeFilters = filtersParam || currentFilters || filters;
-   
-    if (filtersParam) {
-      setCurrentFilters(filtersParam);
-    }
-      const { articles: newData, pagination } = await getArticlesByFiltering(activeFilters, currentPage, 25, isLatest)
-      setPage(currentPage)
-      setHasMore(currentPage < pagination.pageCount)
+        
+  const activeFilters = filtersParam || currentFilters || filters;
+    
+      if (filtersParam) {
+        setCurrentFilters(filtersParam);
+      }
+        const { articles: newData, pagination } = await getArticlesByFiltering(activeFilters, currentPage, 25, isLatest)
+        setPage(currentPage)
+        setHasMore(currentPage < pagination.pageCount)
 
-      if (loadMore) {
-        setArticles(prev => [...prev, ...newData])
+        if (loadMore) {
+          setArticles(prev => [...prev, ...newData])
+        }
+        else {
+          setArticles(newData)
+        }
+      } catch (err: any) {
+        setError(err.message || "Error fetching articles")
+        setArticles([])
+      } finally {
+        setIsLoading(false)
       }
-      else {
-        setArticles(newData)
-      }
-    } catch (err: any) {
-      setError(err.message || "Error fetching articles")
-      setArticles([])
-    } finally {
-      setIsLoading(false)
     }
-  }
 
   return (
     <ArticleSearchContext.Provider

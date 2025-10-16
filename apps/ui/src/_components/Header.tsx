@@ -1,16 +1,53 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import Navbar from './Navbar'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useArticleSearch } from '@/context/articleContext'
+
 
 export default function Header() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { searchClicked } = useArticleSearch()
+  const [windowWidth, setWindowWidth] = useState<number>(1372)
 
 
-  console.log(mobileMenuOpen)
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+
+
+  let scaleValue = 1
+
+  if (searchClicked) {
+    if (windowWidth >= 1536) {
+
+      scaleValue = 0.9
+    }
+    else if (windowWidth >= 1280) {
+
+      scaleValue = 0.7
+    }
+    else if (windowWidth >= 1024) {
+
+      scaleValue = 0.6
+    }
+    else if (windowWidth >= 837) {
+
+      scaleValue = 0.5
+    }
+   
+    else {
+
+      scaleValue = 0
+    }
+  }
+
   return (
     <div>
       <div className="flex  justify-between items-center h-[124px] px-6 bg-white">
@@ -27,10 +64,22 @@ export default function Header() {
           </Link>
 
         </div>
+
+        {searchClicked && (
+          <div style={{ transform: `scale(${scaleValue})`}}>
+            <h1 className="text-[20px] md:text-[36px] font-bold text-center max-w-[80%] mx-auto">
+              The Finerplanet Top 100 Business School Research Rankings™
+            </h1>
+            <div className="bg-gradient-to-r from-[#3B3098] to-[#00A649] w-[60px] h-[2px] mx-auto mt-1" />
+          </div>
+        )}
+
+
+
         {mobileMenuOpen ? (
-          <Image src='/close-hamburger.svg' alt='menu' height={24} width={24} className='md:hidden block' onClick={() => setMobileMenuOpen(prev => !prev)} />
+          <Image src='/close-hamburger.svg' alt='menu' height={24} width={24} className='md:hidden block cursor-pointer' onClick={() => setMobileMenuOpen(prev => !prev)} />
         ) : (
-          <Image src='/hamburger-icon.svg' alt='menu' height={24} width={24} className='md:hidden block' onClick={() => setMobileMenuOpen(prev => !prev)} />
+          <Image src='/hamburger-icon.svg' alt='menu' height={24} width={24} className='md:hidden block cursor-pointer' onClick={() => setMobileMenuOpen(prev => !prev)} />
         )}
 
 

@@ -64,7 +64,7 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
           {navElements.map((element) => (
             <button
               key={element.id}
-              className="text-left text-sm border-b border-[#E5E7EB]"
+              className="text-left text-sm border-b border-[#E5E7EB] cursor-pointer"
               onClick={() => handleClick(element.key)}
             >
               {element.name}
