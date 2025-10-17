@@ -21,7 +21,7 @@ export default function ShareAndDownloadButtons() {
 
   const handleDownload = () => {
     const link = document.createElement("a")
-    link.href = "/files/article.pdf"
+    link.href = "/article.pdf"
     link.download = "article.pdf"
     link.click()
   }
