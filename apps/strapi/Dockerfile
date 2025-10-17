@@ -18,17 +18,18 @@ RUN apk update && apk add --no-cache libc6-compat
 FROM base AS pruned
 ARG WORKSPACE
 
-# Set working directory
 WORKDIR /app
-COPY . .
 
-# Install yarn first (Turbo needs it to resolve the packageManager)
+# Copy only essential files Turbo needs to detect the package manager
+COPY package.json turbo.json yarn.lock ./
+COPY apps/${APP}/package.json apps/${APP}/
+COPY packages ./packages
+
+# Enable Yarn and install Turbo
 RUN corepack enable && corepack prepare yarn@1.22.22 --activate
-
-# Install turbo globally
 RUN yarn global add turbo@^1.13.4
 
-# Prune only the Strapi workspace
+# Prune only the target workspace for Docker
 RUN turbo prune ${WORKSPACE} --docker
 
 # -------------------------- stage installer ---------------------------------
