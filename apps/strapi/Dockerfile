@@ -22,7 +22,6 @@ WORKDIR /app
 
 # Copy only essential files Turbo needs to detect the package manager
 COPY package.json turbo.json yarn.lock ./
-COPY apps/${APP}/package.json apps/${APP}/
 COPY packages ./packages
 
 # Enable Yarn and install Turbo
