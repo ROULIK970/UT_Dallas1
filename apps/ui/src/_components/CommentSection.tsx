@@ -1,8 +1,11 @@
 "use client"
+
 import { useState } from "react"
-import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik"
-import * as Yup from "yup"
 import Image from "next/image"
+import { ErrorMessage, Field, Form, Formik } from "formik"
+import * as Yup from "yup"
+
+import type { FormikHelpers } from "formik"
 
 const CommentSchema = Yup.object().shape({
   name: Yup.string().trim().required("Name is required"),
@@ -14,8 +17,6 @@ type FormValues = { name: string; comment: string }
 const CommentSection = () => {
   const [comments, setComments] = useState<FormValues[]>([])
 
-
-
   //No backend, just simulating a submit
   const handleSubmit = (
     values: FormValues,
@@ -23,7 +24,6 @@ const CommentSection = () => {
   ) => {
     setSubmitting(true)
     setStatus(null)
-
 
     const submitted = { ...values }
 
@@ -39,7 +39,11 @@ const CommentSection = () => {
     <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Comments</h2>
 
-      <Formik initialValues={{ name: "", comment: "" }} validationSchema={CommentSchema} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={{ name: "", comment: "" }}
+        validationSchema={CommentSchema}
+        onSubmit={handleSubmit}
+      >
         {({ isSubmitting, status }) => (
           <Form className="space-y-4">
             <div>
@@ -49,7 +53,11 @@ const CommentSection = () => {
                 placeholder="Your name"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
-              <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
             </div>
 
             <div>
@@ -60,7 +68,11 @@ const CommentSection = () => {
                 rows={4}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
-              <ErrorMessage name="comment" component="div" className="text-red-500 text-sm mt-1" />
+              <ErrorMessage
+                name="comment"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
             </div>
 
             <button
@@ -71,22 +83,35 @@ const CommentSection = () => {
               {isSubmitting ? "Posting..." : "Post a Comment"}
             </button>
 
-            {status?.success && <p className="text-green-600 text-sm">{status.success}</p>}
-            {status?.error && <p className="text-red-500 text-sm">{status.error}</p>}
+            {status?.success && (
+              <p className="text-green-600 text-sm">{status.success}</p>
+            )}
+            {status?.error && (
+              <p className="text-red-500 text-sm">{status.error}</p>
+            )}
 
             <div className="mt-6" aria-live="polite">
               {comments.length > 0 ? (
                 <div className="space-y-3">
                   {comments.map((c, idx) => (
-                    <div key={idx} className="rounded-md border border-gray-200 p-3">
+                    <div
+                      key={idx}
+                      className="rounded-md border border-gray-200 p-3"
+                    >
                       <div className="flex">
-                        <Image src='/demo-img.svg' alt='demo-img' width={32}
+                        <Image
+                          src="/demo-img.svg"
+                          alt="demo-img"
+                          width={32}
                           height={32}
-                          className="rounded-full mr-2" />
+                          className="rounded-full mr-2"
+                        />
                         <p className="font-[600] text-[18px]">{c.name}</p>
                       </div>
 
-                      <div className="text--[16px] text-gray-700]">{c.comment}</div>
+                      <div className="text--[16px] text-gray-700]">
+                        {c.comment}
+                      </div>
                     </div>
                   ))}
                 </div>

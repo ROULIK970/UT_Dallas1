@@ -1,18 +1,21 @@
 "use client"
 
-import React from 'react'
-import Searchbar from './Searchbar'
-import { useNav } from '@/context/NavContext'
-import { useArticleSearch } from '@/context/articleContext'
-import { useRouter } from 'next/navigation'
+import React from "react"
+import { useRouter } from "next/navigation"
+import { useArticleSearch } from "@/context/articleContext"
+import { useNav } from "@/context/NavContext"
+
+import Searchbar from "./Searchbar"
 
 interface NavbarProps {
   mobileMenuOpen: boolean
   setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProps) {
-
+export default function Navbar({
+  mobileMenuOpen,
+  setMobileMenuOpen,
+}: NavbarProps) {
   const router = useRouter()
 
   const { active, setActive } = useNav()
@@ -25,19 +28,15 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
     { id: 3, name: "Blogs", key: "Blogs" },
   ]
 
-
   const handleClick = async (key: string) => {
-
     setActive(key)
-    if (key === 'Blogs') {
-      router.push('/blogs')
+    if (key === "Blogs") {
+      router.push("/blogs")
     } else {
-      
       setSearchClicked(false)
 
-      if (window.location.pathname !== '/') {
-
-        router.push('/')
+      if (window.location.pathname !== "/") {
+        router.push("/")
         setTimeout(() => {
           const heroSection = document.getElementById("hero-description")
           if (heroSection) {
@@ -56,8 +55,6 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
 
   return (
     <>
-     
-      
       {/* mobile Navbar */}
       {mobileMenuOpen ? (
         <div className="md:hidden bg-white mt-[-20px] text-[#2A2A2A] flex flex-col px-[25px] py-[18px] gap-4">
@@ -70,37 +67,29 @@ export default function Navbar({ mobileMenuOpen, setMobileMenuOpen }: NavbarProp
               {element.name}
             </button>
           ))}
-
         </div>
-      ): (
+      ) : (
         <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
-        {navElements.map((element) => (
-          <button
-            key={element.id}
-            className="text-white hidden md:block flex-1 text-[18px] text-center cursor-pointer"
-            onClick={() => handleClick(element.key)}
+          {navElements.map((element) => (
+            <button
+              key={element.id}
+              className="text-white hidden md:block flex-1 text-[18px] text-center cursor-pointer"
+              onClick={() => handleClick(element.key)}
+            >
+              <span className="relative">
+                {element.name}
+                {active === element.key && (
+                  <span className="absolute left-0 bottom-0 h-[2px] w-full bg-gray-400"></span>
+                )}
+              </span>
+            </button>
+          ))}
 
-          >
-            <span className="relative">
-              {element.name}
-              {active === element.key && (
-                <span className="absolute left-0 bottom-0 h-[2px] w-full bg-gray-400"></span>
-              )}
-
-            </span>
-
-
-          </button>
-        ))}
-
-
-        <div className="flex-[3]">
-          <Searchbar />
+          <div className="flex-[3]">
+            <Searchbar />
+          </div>
         </div>
-      </div>
       )}
     </>
-
-
   )
 }

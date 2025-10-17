@@ -1,7 +1,7 @@
 "use client"
-import React, { createContext, useContext, useState, ReactNode } from "react"
-import { getArticlesByFiltering } from "@/api/services/articles.service"
 
+import React, { createContext, ReactNode, useContext, useState } from "react"
+import { getArticlesByFiltering } from "@/api/services/articles.service"
 
 interface FormValues {
   firstName: string[]
@@ -34,14 +34,20 @@ interface ArticleSearchContextType {
   articles: Article[]
   isLoading: boolean
   error: string | null
-  fetchArticles: (filtersParam?: FormValues, loadMore?: boolean,isLatest?: boolean) => Promise<void>
+  fetchArticles: (
+    filtersParam?: FormValues,
+    loadMore?: boolean,
+    isLatest?: boolean
+  ) => Promise<void>
   searchClicked: boolean
   setSearchClicked: (value: boolean) => void
   hasMore: boolean
   page: number
 }
 
-const ArticleSearchContext = createContext<ArticleSearchContextType | undefined>(undefined)
+const ArticleSearchContext = createContext<
+  ArticleSearchContextType | undefined
+>(undefined)
 
 export function ArticleSearchProvider({ children }: { children: ReactNode }) {
   const [filters, setFilters] = useState<FormValues>({
@@ -54,46 +60,50 @@ export function ArticleSearchProvider({ children }: { children: ReactNode }) {
   })
 
   const [articles, setArticles] = useState<Article[]>([])
-  const [currentFilters, setCurrentFilters] = useState({});
+  const [currentFilters, setCurrentFilters] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [searchClicked, setSearchClicked] = useState(false)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
 
+  const fetchArticles = async (
+    filtersParam?: FormValues,
+    loadMore = false,
+    isLatest: boolean = false
+  ) => {
+    try {
+      setIsLoading(true)
+      const currentPage = loadMore ? page + 1 : 1
+      console.log(loadMore)
+      setError(null)
 
+      const activeFilters = filtersParam || currentFilters || filters
 
-
-    const fetchArticles = async (filtersParam?: FormValues, loadMore = false, isLatest: boolean = false) => {
-      try {
-        setIsLoading(true)
-        const currentPage = loadMore ? page + 1 : 1
-        console.log(loadMore)
-        setError(null)
-
-        
-  const activeFilters = filtersParam || currentFilters || filters;
-    
       if (filtersParam) {
-        setCurrentFilters(filtersParam);
+        setCurrentFilters(filtersParam)
       }
-        const { articles: newData, pagination } = await getArticlesByFiltering(activeFilters, currentPage, 25, isLatest)
-        setPage(currentPage)
-        setHasMore(currentPage < pagination.pageCount)
+      const { articles: newData, pagination } = await getArticlesByFiltering(
+        activeFilters,
+        currentPage,
+        25,
+        isLatest
+      )
+      setPage(currentPage)
+      setHasMore(currentPage < pagination.pageCount)
 
-        if (loadMore) {
-          setArticles(prev => [...prev, ...newData])
-        }
-        else {
-          setArticles(newData)
-        }
-      } catch (err: any) {
-        setError(err.message || "Error fetching articles")
-        setArticles([])
-      } finally {
-        setIsLoading(false)
+      if (loadMore) {
+        setArticles((prev) => [...prev, ...newData])
+      } else {
+        setArticles(newData)
       }
+    } catch (err: any) {
+      setError(err.message || "Error fetching articles")
+      setArticles([])
+    } finally {
+      setIsLoading(false)
     }
+  }
 
   return (
     <ArticleSearchContext.Provider
@@ -107,7 +117,7 @@ export function ArticleSearchProvider({ children }: { children: ReactNode }) {
         searchClicked,
         setSearchClicked,
         hasMore,
-        page
+        page,
       }}
     >
       {children}
@@ -118,7 +128,9 @@ export function ArticleSearchProvider({ children }: { children: ReactNode }) {
 export function useArticleSearch() {
   const context = useContext(ArticleSearchContext)
   if (!context) {
-    throw new Error("useArticleSearch must be used within ArticleSearchProvider")
+    throw new Error(
+      "useArticleSearch must be used within ArticleSearchProvider"
+    )
   }
   return context
 }

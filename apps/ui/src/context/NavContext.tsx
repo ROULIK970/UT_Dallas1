@@ -1,4 +1,5 @@
 "use client"
+
 import React, { createContext, useContext, useState } from "react"
 
 type NavContextType = {
@@ -9,7 +10,7 @@ type NavContextType = {
 const NavContext = createContext<NavContextType | undefined>(undefined)
 
 export function NavProvider({ children }: { children: React.ReactNode }) {
-  const [active, setActive] = useState("Author") 
+  const [active, setActive] = useState("Author")
 
   return (
     <NavContext.Provider value={{ active, setActive }}>

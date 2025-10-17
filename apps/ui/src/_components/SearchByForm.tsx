@@ -1,19 +1,28 @@
 "use client"
+
 import { useEffect, useState } from "react"
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import { useNav } from "@/context/NavContext"
-import CustomSelect from "./CustomSelect"
-import { useArticleSearch } from "@/context/articleContext"
 import Image from "next/image"
 import { getFilterOptions } from "@/api/services/articles.service"
+import { useArticleSearch } from "@/context/articleContext"
+import { useNav } from "@/context/NavContext"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+
+import CustomSelect from "./CustomSelect"
 
 export default function SearchByForm() {
-
-  const [firstnameOptions, setFirstnameOptions] = useState<{ value: string, label: string }[]>([])
-  const [lastnameOptions, setLastnameOptions] = useState<{ value: string, label: string }[]>([])
-  const [journalOptions, setJournalOptions] = useState<{ value: string, label: string }[]>([])
-  const [articleOptions, setArticleOptions] = useState<{ value: string, label: string }[]>([])
+  const [firstnameOptions, setFirstnameOptions] = useState<
+    { value: string; label: string }[]
+  >([])
+  const [lastnameOptions, setLastnameOptions] = useState<
+    { value: string; label: string }[]
+  >([])
+  const [journalOptions, setJournalOptions] = useState<
+    { value: string; label: string }[]
+  >([])
+  const [articleOptions, setArticleOptions] = useState<
+    { value: string; label: string }[]
+  >([])
 
   useEffect(() => {
     async function fetchOptions() {
@@ -39,9 +48,6 @@ export default function SearchByForm() {
     setYearOptions(years)
   }, [])
 
-
-
-
   const YearComponent = () => (
     <div className="flex flex-col md:max-w-[45%] text-left flex-1 md:flex-[0.5] ">
       <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
@@ -51,7 +57,13 @@ export default function SearchByForm() {
       <div className="flex items-center border rounded-lg overflow-hidden p-[10px] bg-[#F1F5FF]">
         {/* Start Year */}
         <div className="flex items-center md:px-3 py-2 flex-1">
-          <Image src="/calendar.svg" alt="start-year-icon" width={18.5} height={18.5} className="mr-2" />
+          <Image
+            src="/calendar.svg"
+            alt="start-year-icon"
+            width={18.5}
+            height={18.5}
+            className="mr-2"
+          />
           <select
             id="yearStart"
             name="yearStart"
@@ -69,12 +81,17 @@ export default function SearchByForm() {
           </select>
         </div>
 
-
         <div className="h-[65%] w-px bg-[#D1D5DB] mx-2" />
 
         {/* End Year */}
         <div className="flex items-center md:px-3 py-2 flex-1">
-          <Image src="/calendar.svg" alt="end-year-icon" width={18.5} height={18.5} className="mr-2" />
+          <Image
+            src="/calendar.svg"
+            alt="end-year-icon"
+            width={18.5}
+            height={18.5}
+            className="mr-2"
+          />
           <select
             id="yearEnd"
             name="yearEnd"
@@ -96,15 +113,18 @@ export default function SearchByForm() {
       {/* Error messages below */}
       <div className="flex gap-2 mt-1">
         {formik.touched.yearStart && formik.errors.yearStart && (
-          <div className="text-red-500 text-sm flex-1">{formik.errors.yearStart}</div>
+          <div className="text-red-500 text-sm flex-1">
+            {formik.errors.yearStart}
+          </div>
         )}
         {formik.touched.yearEnd && formik.errors.yearEnd && (
-          <div className="text-red-500 text-sm flex-1">{formik.errors.yearEnd}</div>
+          <div className="text-red-500 text-sm flex-1">
+            {formik.errors.yearEnd}
+          </div>
         )}
       </div>
     </div>
   )
-
 
   interface FormValues {
     firstName: string[]
@@ -116,10 +136,6 @@ export default function SearchByForm() {
     universityName: string[]
     authorsName: string[]
   }
-
-
-
-
 
   const validationSchemaMap: Record<string, Yup.ObjectSchema<any>> = {
     Author: Yup.object({
@@ -136,9 +152,15 @@ export default function SearchByForm() {
       journal: Yup.array(),
     }),
     AdvancedSearch: Yup.object({
-      universityName: Yup.array().min(1, "Select at least one university name").required("Required"),
-      authorsName: Yup.array().min(1, "Select at least one authors name").required("Required"),
-      articleName: Yup.array().min(1, "Select at least one article name").required("Required"),
+      universityName: Yup.array()
+        .min(1, "Select at least one university name")
+        .required("Required"),
+      authorsName: Yup.array()
+        .min(1, "Select at least one authors name")
+        .required("Required"),
+      articleName: Yup.array()
+        .min(1, "Select at least one article name")
+        .required("Required"),
       yearStart: Yup.date().required("Start Year Required"),
       yearEnd: Yup.date().required("End Year Required"),
     }),
@@ -172,10 +194,20 @@ export default function SearchByForm() {
             <div className="2xl:flex  gap-6 ">
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
+                  <label
+                    className="flex-1 text-[16px] text-[#333] mb-[10px]"
+                    htmlFor="firstName"
+                  >
                     Author's First Name (You can select multiple Authors)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                  <span className="text-black flex-[0.1] flex justify-end">
+                    <Image
+                      src="/form-icon.svg"
+                      alt="form-icon"
+                      width={18.5}
+                      height={18.5}
+                    />
+                  </span>
                 </div>
 
                 <CustomSelect
@@ -189,15 +221,29 @@ export default function SearchByForm() {
                   onChange={(value) => formik.setFieldValue("firstName", value)}
                 />
 
-                {formik.touched.firstName && formik.errors.firstName ? <div className="text-red-500 text-sm">{formik.errors.firstName}</div> : null}
+                {formik.touched.firstName && formik.errors.firstName ? (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.firstName}
+                  </div>
+                ) : null}
               </div>
 
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="text-[16px] flex-1 text-[#333] mb-[10px]" htmlFor="lastName">
+                  <label
+                    className="text-[16px] flex-1 text-[#333] mb-[10px]"
+                    htmlFor="lastName"
+                  >
                     Author's Last Name (You can select multiple Authors)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                  <span className="text-black flex-[0.1] flex justify-end">
+                    <Image
+                      src="/form-icon.svg"
+                      alt="form-icon"
+                      width={18.5}
+                      height={18.5}
+                    />
+                  </span>
                 </div>
 
                 <CustomSelect
@@ -210,7 +256,11 @@ export default function SearchByForm() {
                   value={formik.values.lastName}
                   onChange={(value) => formik.setFieldValue("lastName", value)}
                 />
-                {formik.touched.lastName && formik.errors.lastName ? <div className="text-red-500 text-sm">{formik.errors.lastName}</div> : null}
+                {formik.touched.lastName && formik.errors.lastName ? (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.lastName}
+                  </div>
+                ) : null}
               </div>
 
               {/* Year Range */}
@@ -219,10 +269,21 @@ export default function SearchByForm() {
 
             <div className="text-left mb-3">
               <div className="flex">
-                <label className="text-[16px] mr-[15px] text-[#333] mb-[10px]" htmlFor="journals">
+                <label
+                  className="text-[16px] mr-[15px] text-[#333] mb-[10px]"
+                  htmlFor="journals"
+                >
                   Journals
                 </label>
-                <span className="text-black"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span></div>
+                <span className="text-black">
+                  <Image
+                    src="/form-icon.svg"
+                    alt="form-icon"
+                    width={18.5}
+                    height={18.5}
+                  />
+                </span>
+              </div>
 
               <CustomSelect
                 instanceId="firstName-select"
@@ -236,7 +297,9 @@ export default function SearchByForm() {
               />
 
               {formik.touched.journal && formik.errors.journal && (
-                <div className="text-red-500 text-sm">{formik.errors.journal}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.journal}
+                </div>
               )}
             </div>
           </div>
@@ -249,11 +312,22 @@ export default function SearchByForm() {
             <div className="2xl:flex  md:flex-row flex-col gap-6">
               <div className="text-left flex flex-col flex-2">
                 <div className="flex">
-                  <label className="text-[16px] flex-1 mb-[10px] text-[#333]" htmlFor="articleName">
-                    Start typing Article's Name (You can select multiple Articles)
+                  <label
+                    className="text-[16px] flex-1 mb-[10px] text-[#333]"
+                    htmlFor="articleName"
+                  >
+                    Start typing Article's Name (You can select multiple
+                    Articles)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span></div>
-
+                  <span className="text-black flex-[0.1] flex justify-end">
+                    <Image
+                      src="/form-icon.svg"
+                      alt="form-icon"
+                      width={18.5}
+                      height={18.5}
+                    />
+                  </span>
+                </div>
 
                 <CustomSelect
                   instanceId="firstName-select"
@@ -263,10 +337,14 @@ export default function SearchByForm() {
                   isMulti
                   placeholder="Enter article name"
                   value={formik.values.articleName}
-                  onChange={(value) => formik.setFieldValue("articleName", value)}
+                  onChange={(value) =>
+                    formik.setFieldValue("articleName", value)
+                  }
                 />
                 {formik.touched.articleName && formik.errors.articleName ? (
-                  <div className="text-red-500 text-sm">{formik.errors.articleName}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.articleName}
+                  </div>
                 ) : null}
               </div>
 
@@ -276,10 +354,20 @@ export default function SearchByForm() {
 
             <div className="text-left mb-3">
               <div className="flex">
-                <label className="text-[16px] mr-[15px] text-[#333] mb-[10px]" htmlFor="journal">
+                <label
+                  className="text-[16px] mr-[15px] text-[#333] mb-[10px]"
+                  htmlFor="journal"
+                >
                   Journals
                 </label>
-                <span className="text-black"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                <span className="text-black">
+                  <Image
+                    src="/form-icon.svg"
+                    alt="form-icon"
+                    width={18.5}
+                    height={18.5}
+                  />
+                </span>
               </div>
 
               <CustomSelect
@@ -293,7 +381,9 @@ export default function SearchByForm() {
                 onChange={(value) => formik.setFieldValue("journal", value)}
               />
               {formik.touched.journal && formik.errors.journal && (
-                <div className="text-red-500 text-sm">{formik.errors.journal}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.journal}
+                </div>
               )}
             </div>
           </div>
@@ -304,14 +394,22 @@ export default function SearchByForm() {
         {active === "AdvancedSearch" && (
           <div className="flex  flex-col gap-3">
             <div className="2xl:flex md:flex-row flex-col gap-6">
-
-
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="flex-1 text-[16px] text-[#333] mb-[10px]" htmlFor="firstName">
+                  <label
+                    className="flex-1 text-[16px] text-[#333] mb-[10px]"
+                    htmlFor="firstName"
+                  >
                     Author's First Name (You can select multiple Authors)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                  <span className="text-black flex-[0.1] flex justify-end">
+                    <Image
+                      src="/form-icon.svg"
+                      alt="form-icon"
+                      width={18.5}
+                      height={18.5}
+                    />
+                  </span>
                 </div>
 
                 <CustomSelect
@@ -325,15 +423,29 @@ export default function SearchByForm() {
                   onChange={(value) => formik.setFieldValue("firstName", value)}
                 />
 
-                {formik.touched.firstName && formik.errors.firstName ? <div className="text-red-500 text-sm">{formik.errors.firstName}</div> : null}
+                {formik.touched.firstName && formik.errors.firstName ? (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.firstName}
+                  </div>
+                ) : null}
               </div>
 
               <div className="text-left flex-1">
                 <div className="flex">
-                  <label className="text-[16px] flex-1 text-[#333] mb-[10px]" htmlFor="lastName">
+                  <label
+                    className="text-[16px] flex-1 text-[#333] mb-[10px]"
+                    htmlFor="lastName"
+                  >
                     Author's Last Name (You can select multiple Authors)
                   </label>
-                  <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                  <span className="text-black flex-[0.1] flex justify-end">
+                    <Image
+                      src="/form-icon.svg"
+                      alt="form-icon"
+                      width={18.5}
+                      height={18.5}
+                    />
+                  </span>
                 </div>
 
                 <CustomSelect
@@ -346,17 +458,32 @@ export default function SearchByForm() {
                   value={formik.values.lastName}
                   onChange={(value) => formik.setFieldValue("lastName", value)}
                 />
-                {formik.touched.lastName && formik.errors.lastName ? <div className="text-red-500 text-sm">{formik.errors.lastName}</div> : null}
+                {formik.touched.lastName && formik.errors.lastName ? (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.lastName}
+                  </div>
+                ) : null}
               </div>
               <YearComponent />
             </div>
 
             <div className="text-left flex flex-col">
               <div className="flex">
-                <label className="text-[16px]  text-[#333] mb-[10px]" htmlFor="articleName">
-                  Start typing Articles's Name (You can select multiple Articles)
+                <label
+                  className="text-[16px]  text-[#333] mb-[10px]"
+                  htmlFor="articleName"
+                >
+                  Start typing Articles's Name (You can select multiple
+                  Articles)
                 </label>
-                <span className="text-black flex-[0.1] flex justify-end"><Image src="/form-icon.svg" alt="form-icon" width={18.5} height={18.5} /></span>
+                <span className="text-black flex-[0.1] flex justify-end">
+                  <Image
+                    src="/form-icon.svg"
+                    alt="form-icon"
+                    width={18.5}
+                    height={18.5}
+                  />
+                </span>
               </div>
 
               <CustomSelect
@@ -369,7 +496,11 @@ export default function SearchByForm() {
                 value={formik.values.articleName}
                 onChange={(value) => formik.setFieldValue("articleName", value)}
               />
-              {formik.touched.articleName && formik.errors.articleName ? <div className="text-red-500 text-sm">{formik.errors.articleName}</div> : null}
+              {formik.touched.articleName && formik.errors.articleName ? (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.articleName}
+                </div>
+              ) : null}
             </div>
           </div>
         )}

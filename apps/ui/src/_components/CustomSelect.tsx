@@ -1,5 +1,8 @@
 "use client"
-import Select, { type MultiValue, type SingleValue, type StylesConfig } from "react-select"
+
+import Select from "react-select"
+
+import type { MultiValue, SingleValue, StylesConfig } from "react-select"
 
 interface Option {
   label: string
@@ -32,7 +35,11 @@ const CustomSelect = ({
   onChange,
 }: CustomSelectProps) => {
   const handleChange = (option: MultiValue<Option> | SingleValue<Option>) => {
-    onChange(isMulti ? (option as MultiValue<Option>).map((item) => item.value) : (option as Option)?.value || "")
+    onChange(
+      isMulti
+        ? (option as MultiValue<Option>).map((item) => item.value)
+        : (option as Option)?.value || ""
+    )
   }
 
   const getValue = () => {
@@ -107,7 +114,7 @@ const CustomSelect = ({
       options={options}
       isMulti={isMulti}
       styles={customStyles || defaultStyles}
-      instanceId={instanceId} 
+      instanceId={instanceId}
     />
   )
 }
