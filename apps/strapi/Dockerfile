@@ -22,8 +22,13 @@ ARG WORKSPACE
 WORKDIR /app
 COPY . .
 
-# see https://turbo.build/repo/docs/reference/command-line-reference#turbo-prune---scopetarget
+# Install yarn first (Turbo needs it to resolve the packageManager)
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
+
+# Install turbo globally
 RUN yarn global add turbo@^1.13.4
+
+# Prune only the Strapi workspace
 RUN turbo prune ${WORKSPACE} --docker
 
 # -------------------------- stage installer ---------------------------------
