@@ -60,13 +60,13 @@ export default function BlogDetailPage({
             <h1 className="text-[#1D2A49] text-[24px] md:text-[36px] font-medium">
               Latest Blogs
             </h1>
-            {latestBlogs.map((blog, index) => (
+            {latestBlogs?.map((blog, index) => (
               <div
                 key={index}
                 className="rounded-[10px] p-2 md:p-5 mt-2 border md:h-[195px] md:w-[461px] border-[rgba(68,98,169,0.2)] shadow-[0_4px_20px_0_rgba(153,86,236,0.08)]"
               >
                 <p className="md:py-[12px] md:px-[16px] py-[9px] px-[12px] text-left rounded-[4px] bg-[rgba(68,98,169,0.1)] inline-flex">
-                  {blog.blogTitle}
+                  {blog.title}
                 </p>
                 <p className="text-[#1D2A49] text-[12px] md:text-[20px] font-semibold">
                   {blog.blogDescription}

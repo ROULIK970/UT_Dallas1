@@ -80,7 +80,7 @@ export default function page() {
             </div>
             <div className="flex bg-[#3B3098] items-center cursor-pointer rounded-[11px]  py-[8.072px] px-[13.244px] transform transition-all duration-300 ease-in-out hover:scale-105 w-[147px] gap-[8.8px]">
               <Link
-                href="/blogs/lorem3"
+                href="/blogs/2024-global-business-school-research-rankings"
                 className="text-left text-white text-[12px] md:text-[15.5px] "
               >
                 Read Article

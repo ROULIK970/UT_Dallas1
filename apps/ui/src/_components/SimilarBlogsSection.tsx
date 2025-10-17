@@ -11,6 +11,11 @@ export default function SimilarBlogsSection() {
 
   const blogCategories = ["All", "Research", "Rankings", "News"]
 
+  const filteredBlogs =
+    active === "All"
+      ? getBlogsInfo
+      : getBlogsInfo.filter((blog) => blog.category === active)
+
   return (
     <div className="mt-[50px]">
       <h1 className="text-[#1D2A49] text-[18px] md:text-[28px] font-[600] mb-[30px]">
@@ -22,7 +27,7 @@ export default function SimilarBlogsSection() {
           <button
             key={index}
             onClick={() => setActive(category)}
-            className={`${isActive ? "bg-[#3B3098] text-white" : ""} cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:border-2  hover:border-purple-600 border-2  border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2`}
+            className={`${isActive ? "bg-[#3B3098] text-white" : ""} cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:border-2  hover:border-[#3B3098] border-2  border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2`}
           >
             {category}
           </button>
@@ -30,7 +35,7 @@ export default function SimilarBlogsSection() {
       })}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-[70px]">
-        {getBlogsInfo.map((blog, index) => (
+        {filteredBlogs.map((blog, index) => (
           <Link
             href={`/blogs/${blog.slug}`}
             key={index}
