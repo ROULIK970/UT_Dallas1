@@ -36,7 +36,7 @@
     "@strapi/plugin-seo": "2.0.0",
     "@strapi/plugin-users-permissions": "^5.2.0",
     "@strapi/provider-email-mailgun": "^5.2.0",
-    "@strapi/provider-upload-aws-s3": "^5.2.0",
+    "@strapi/provider-upload-aws-s3": "^5.29.0",
     "@strapi/strapi": "^5.2.0",
     "lodash": "^4.17.21",
     "pg": "^8.13.1",

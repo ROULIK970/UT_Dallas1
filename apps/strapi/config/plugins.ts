@@ -1,110 +1,19 @@
-import path from "path"
-
-export default ({ env }) => {
-  const awsS3Config = prepareAwsS3Config(env)
-  if (!awsS3Config) {
-    console.info(
-      "AWS S3 upload configuration is not complete. Local file storage will be used."
-    )
-  }
-
-  return {
-    upload: {
-      config: awsS3Config ?? localUploadConfig,
-    },
-
-    seo: {
-      enabled: true,
-    },
-
-    "config-sync": {
-      enabled: true,
-    },
-
-    "strapi-v5-plugin-populate-deep": {
-      config: {
-        defaultDepth: 5,
-      },
-    },
-
-    "users-permissions": {
-      config: {
-        jwt: {
-          expiresIn: "30d", // this value is synced with NextAuth session maxAge
-        },
-      },
-    },
-
-    sentry: {
-      enabled: true,
-      config: {
-        // Only set `dsn` property in production
-        dsn: env("NODE_ENV") === "production" ? env("SENTRY_DSN") : null,
-        sendMetadata: true,
-      },
-    },
-
-    // email: {
-    //   config: {
-    //     provider: "mailgun",
-    //     providerOptions: {
-    //       key: env("MAILGUN_API_KEY"),
-    //       domain: env("MAILGUN_DOMAIN"),
-    //       url: env("MAILGUN_HOST", "https://api.eu.mailgun.net"),
-    //     },
-    //     settings: {
-    //       defaultFrom: env("MAILGUN_EMAIL"),
-    //       defaultReplyTo: env("MAILGUN_EMAIL"),
-    //     },
-    //   },
-    // },
-  }
-}
-
-const localUploadConfig: any = {
-  provider: "local",
-  providerOptions: {
-    sizeLimit: 25 * 1024 * 1024, // 25 MB
-    localServer: {
-      maxage: 300000,
-    },
-    // Save uploads in /tmp/uploads instead of ./public/uploads
-    uploadPath: path.join("/tmp/uploads"),
-  },
-}
-
-const prepareAwsS3Config = (env) => {
-  const awsAccessKeyId = env("AWS_ACCESS_KEY_ID")
-  const awsAccessSecret = env("AWS_ACCESS_SECRET")
-  const awsRegion = env("AWS_REGION")
-  const awsBucket = env("AWS_BUCKET")
-  const awsRequirements = [
-    awsAccessKeyId,
-    awsAccessSecret,
-    awsRegion,
-    awsBucket,
-  ]
-  const awsRequirementsOk = awsRequirements.every(
-    (req) => req != null && req !== ""
-  )
-
-  if (awsRequirementsOk) {
-    return {
-      provider: "aws-s3",
+export default ({ env }) => ({
+  upload: {
+    config: {
+      provider: "aws-s3", // works because Cloudflare R2 is S3-compatible
       providerOptions: {
-        baseUrl: env("CDN_URL"),
-        rootPath: env("CDN_ROOT_PATH"),
         s3Options: {
           credentials: {
-            accessKeyId: awsAccessKeyId,
-            secretAccessKey: awsAccessSecret,
+            accessKeyId: env("R2_ACCESS_KEY_ID"),
+            secretAccessKey: env("R2_SECRET_ACCESS_KEY"),
           },
-          region: awsRegion,
-          params: {
-            ACL: env("AWS_ACL", "public-read"),
-            signedUrlExpires: env("AWS_SIGNED_URL_EXPIRES", 15 * 60),
-            Bucket: awsBucket,
-          },
+          endpoint: env("R2_ENDPOINT"),
+          region: "auto",
+        },
+        params: {
+          Bucket: env("R2_BUCKET"),
+          ACL: "public-read",
         },
       },
       actionOptions: {
@@ -112,8 +21,18 @@ const prepareAwsS3Config = (env) => {
         uploadStream: {},
         delete: {},
       },
-    }
-  }
+    },
+  },
 
-  return undefined
-}
+  seo: { enabled: true },
+  "config-sync": { enabled: true },
+  "strapi-v5-plugin-populate-deep": { config: { defaultDepth: 5 } },
+  "users-permissions": { config: { jwt: { expiresIn: "30d" } } },
+  sentry: {
+    enabled: true,
+    config: {
+      dsn: env("NODE_ENV") === "production" ? env("SENTRY_DSN") : null,
+      sendMetadata: true,
+    },
+  },
+})
