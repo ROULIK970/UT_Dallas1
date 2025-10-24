@@ -486,7 +486,9 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
+    date_of_publishing: Schema.Attribute.Date & Schema.Attribute.Required
     description: Schema.Attribute.RichText & Schema.Attribute.Required
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
     locale: Schema.Attribute.String & Schema.Attribute.Private
     localizations: Schema.Attribute.Relation<"oneToMany", "api::blog.blog"> &
       Schema.Attribute.Private

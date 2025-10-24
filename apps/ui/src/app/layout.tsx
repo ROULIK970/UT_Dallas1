@@ -6,6 +6,7 @@ import "./globals.css"
 
 import Footer from "@/_components/Footer"
 import { ArticleSearchProvider } from "@/context/articleContext"
+import { BlogProvider } from "@/context/blogContext"
 
 import Header from "../_components/Header"
 import Hero_Section from "../_components/Hero_Section"
@@ -39,11 +40,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ArticleSearchProvider>
-          <NavProvider>
-            <Header />
-            {children}
-            <Footer />
-          </NavProvider>
+          <BlogProvider>
+            <NavProvider>
+              <Header />
+              {children}
+              <Footer />
+            </NavProvider>
+          </BlogProvider>
         </ArticleSearchProvider>
       </body>
     </html>

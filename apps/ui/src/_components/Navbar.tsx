@@ -57,7 +57,7 @@ export default function Navbar({
     <>
       {/* mobile Navbar */}
       {mobileMenuOpen ? (
-        <div className="md:hidden bg-white mt-[-20px] text-[#2A2A2A] flex flex-col px-[25px] py-[18px] gap-4">
+        <div className="md:hidden bg-white -mt-5 text-[#2A2A2A] flex flex-col px-[25px] py-[18px] gap-4 z-0">
           {navElements.map((element) => (
             <button
               key={element.id}
@@ -79,13 +79,13 @@ export default function Navbar({
               <span className="relative">
                 {element.name}
                 {active === element.key && (
-                  <span className="absolute left-0 bottom-0 h-[2px] w-full bg-gray-400"></span>
+                  <span className="absolute left-0 bottom-0 h-0.5 w-full bg-gray-400"></span>
                 )}
               </span>
             </button>
           ))}
 
-          <div className="flex-[3]">
+          <div className="flex-3 z-30">
             <Searchbar />
           </div>
         </div>

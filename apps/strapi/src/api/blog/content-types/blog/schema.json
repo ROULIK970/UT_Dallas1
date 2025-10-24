@@ -10,6 +10,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string"
@@ -24,8 +25,8 @@
     },
     "content": {
       "type": "richtext",
-      "default": "content",
-      "required": true
+      "required": true,
+      "default": "content"
     },
     "author": {
       "type": "string"
@@ -39,17 +40,17 @@
       ]
     },
     "banner": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "tags": {
       "type": "string",
-      "required": true,
-      "default": "all"
+      "default": "all",
+      "required": true
     },
     "timeToRead": {
       "type": "integer",
@@ -60,10 +61,17 @@
       "required": true
     },
     "comments": {
-      "displayName": "comments",
       "type": "component",
-      "repeatable": true,
-      "component": "blog-component.comments"
+      "component": "blog-component.comments",
+      "repeatable": true
+    },
+    "date_of_publishing": {
+      "type": "date",
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

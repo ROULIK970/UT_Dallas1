@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import * as Yup from "yup"
@@ -14,25 +14,111 @@ const CommentSchema = Yup.object().shape({
 
 type FormValues = { name: string; comment: string }
 
-const CommentSection = () => {
-  const [comments, setComments] = useState<FormValues[]>([])
+type CommentSectionProps = {
+  blogId: string | number
+}
 
-  //No backend, just simulating a submit
-  const handleSubmit = (
+const CommentSection = ({ blogId }: CommentSectionProps) => {
+  const [comments, setComments] = useState<FormValues[]>([])
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+        const res = await fetch(
+          `${apiUrl}/api/blogs/${blogId}?populate=comments`
+        )
+        const data = await res.json()
+        const existingComments = data.data.comments || []
+
+        // Map Strapi comments to FormValues format
+        const formattedComments = existingComments.map((c: any) => ({
+          name: c.commentatorName || c.name,
+          comment: c.comment,
+        }))
+
+        setComments(formattedComments)
+      } catch (error) {
+        console.error("Error fetching comments:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchComments()
+  }, [blogId])
+
+  const handleSubmit = async (
     values: FormValues,
-    { resetForm, setSubmitting, setStatus }: FormikHelpers<FormValues>
+    { resetForm, setSubmitting }: FormikHelpers<FormValues>
   ) => {
     setSubmitting(true)
-    setStatus(null)
+    setStatusMessage(null)
+    setIsError(false)
 
-    const submitted = { ...values }
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
 
-    setTimeout(() => {
-      setComments((prev) => [...prev, submitted])
-      setStatus({ success: "Comment posted successfully!" })
+      const res = await fetch(`${apiUrl}/api/blogs/${blogId}?populate=comments`)
+      const data = await res.json()
+      const existingComments = data.data.comments || []
+
+      const updatedComments = [
+        ...existingComments,
+        {
+          commentatorName: values.name,
+          comment: values.comment,
+        },
+      ]
+
+      const updateRes = await fetch(`${apiUrl}/api/blogs/${blogId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            comments: updatedComments,
+          },
+        }),
+      })
+
+      if (!updateRes.ok) {
+        const errorData = await updateRes.text()
+        console.log("Error response:", errorData)
+        throw new Error(`Failed to post comment: ${updateRes.status}`)
+      }
+
+      const updatedBlog = await updateRes.json()
+      console.log("Response data:", updatedBlog)
+
+      setComments([...comments, { name: values.name, comment: values.comment }])
+      setStatusMessage("Comment posted successfully!")
+      setIsError(false)
       resetForm()
+    } catch (error) {
+      console.error(" Error posting comment:", error)
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      )
+      setIsError(true)
+    } finally {
       setSubmitting(false)
-    }, 500)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+        Loading comments...
+      </div>
+    )
   }
 
   return (
@@ -44,10 +130,14 @@ const CommentSection = () => {
         validationSchema={CommentSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, status }) => (
+        {({ isSubmitting }) => (
           <Form className="space-y-4">
             <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-1">
+                Your Name
+              </label>
               <Field
+                id="name"
                 name="name"
                 type="text"
                 placeholder="Your name"
@@ -61,10 +151,17 @@ const CommentSection = () => {
             </div>
 
             <div>
+              <label
+                htmlFor="comment"
+                className="block text-sm font-medium mb-1"
+              >
+                Your Comment
+              </label>
               <Field
+                id="comment"
                 name="comment"
                 as="textarea"
-                placeholder="What are your thought on this blog ?"
+                placeholder="What are your thoughts on this blog?"
                 rows={4}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
@@ -78,16 +175,17 @@ const CommentSection = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="cursor-pointer flex w-[245px] ml-auto px-[20px] py-[16px] justify-center items-center gap-[10px] rounded-[9px] border border-[#979797] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333] disabled:opacity-50"
+              className="cursor-pointer flex w-[245px] ml-auto px-[20px] py-[16px] justify-center items-center gap-2.5 rounded-[9px] border border-[#979797] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333] disabled:opacity-50 hover:bg-gray-50"
             >
               {isSubmitting ? "Posting..." : "Post a Comment"}
             </button>
 
-            {status?.success && (
-              <p className="text-green-600 text-sm">{status.success}</p>
-            )}
-            {status?.error && (
-              <p className="text-red-500 text-sm">{status.error}</p>
+            {statusMessage && (
+              <p
+                className={`text-sm ${isError ? "text-red-600" : "text-green-600"}`}
+              >
+                {statusMessage}
+              </p>
             )}
 
             <div className="mt-6" aria-live="polite">
@@ -101,15 +199,15 @@ const CommentSection = () => {
                       <div className="flex">
                         <Image
                           src="/demo-img.svg"
-                          alt="demo-img"
+                          alt={`${c.name}'s avatar`}
                           width={32}
                           height={32}
                           className="rounded-full mr-2"
                         />
-                        <p className="font-[600] text-[18px]">{c.name}</p>
+                        <p className="font-semibold text-[18px]">{c.name}</p>
                       </div>
 
-                      <div className="text--[16px] text-gray-700]">
+                      <div className="text-[16px] text-gray-700">
                         {c.comment}
                       </div>
                     </div>

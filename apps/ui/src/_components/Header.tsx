@@ -79,7 +79,7 @@ export default function Header() {
 
         <div className="hidden md:block relative w-[222px] h-[124px]">
           <Image
-            src="/Sponsor_logo.png"
+            src="/best-business-research.svg"
             alt="Sponsor"
             fill
             className="object-contain"
