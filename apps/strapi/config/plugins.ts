@@ -1,3 +1,5 @@
+import path from "path"
+
 export default ({ env }) => {
   const awsS3Config = prepareAwsS3Config(env)
   if (!awsS3Config) {
@@ -60,9 +62,15 @@ export default ({ env }) => {
 }
 
 const localUploadConfig: any = {
-  // Local provider setup
-  // https://docs.strapi.io/dev-docs/plugins/upload
-  sizeLimit: 250 * 1024 * 1024, // 256mb in bytes,
+  provider: "local",
+  providerOptions: {
+    sizeLimit: 25 * 1024 * 1024, // 25 MB
+    localServer: {
+      maxage: 300000,
+    },
+    // Save uploads in /tmp/uploads instead of ./public/uploads
+    uploadPath: path.join("/tmp/uploads"),
+  },
 }
 
 const prepareAwsS3Config = (env) => {
