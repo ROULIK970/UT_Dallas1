@@ -28,20 +28,21 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     const fetchComments = async () => {
       try {
         const apiUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+          process.env.NEXT_PUBLIC_API_URL ||
+          "https://ut-dallas-5poh.onrender.com"
         const res = await fetch(
           `${apiUrl}/api/blogs/${blogId}?populate=comments`
         )
         const data = await res.json()
         const existingComments = data.data.comments || []
 
-        // Map Strapi comments to FormValues format
         const formattedComments = existingComments.map((c: any) => ({
           name: c.commentatorName || c.name,
           comment: c.comment,
         }))
 
         setComments(formattedComments)
+        console.log(formattedComments)
       } catch (error) {
         console.error("Error fetching comments:", error)
       } finally {
@@ -61,18 +62,26 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     setIsError(false)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL || "https://ut-dallas-5poh.onrender.com"
 
       const res = await fetch(`${apiUrl}/api/blogs/${blogId}?populate=comments`)
+      if (!res.ok) throw new Error("Failed to fetch blog data")
+
       const data = await res.json()
       const existingComments = data.data.comments || []
 
+      const newComment = {
+        commentatorName: values.name,
+        comment: values.comment,
+      }
+
       const updatedComments = [
-        ...existingComments,
-        {
-          commentatorName: values.name,
-          comment: values.comment,
-        },
+        ...existingComments.map((c: any) => ({
+          commentatorName: c.commentatorName,
+          comment: c.comment,
+        })),
+        newComment,
       ]
 
       const updateRes = await fetch(`${apiUrl}/api/blogs/${blogId}`, {
@@ -88,20 +97,20 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
       })
 
       if (!updateRes.ok) {
-        const errorData = await updateRes.text()
-        console.log("Error response:", errorData)
-        throw new Error(`Failed to post comment: ${updateRes.status}`)
-      }
+        const errorData = await updateRes.json().catch(() => ({}))
+        console.error("[v0] Strapi error response:", errorData)
 
-      const updatedBlog = await updateRes.json()
-      console.log("Response data:", updatedBlog)
+        const errorMessage =
+          errorData?.error?.message || `Server error: ${updateRes.status}`
+        throw new Error(errorMessage)
+      }
 
       setComments([...comments, { name: values.name, comment: values.comment }])
       setStatusMessage("Comment posted successfully!")
       setIsError(false)
       resetForm()
     } catch (error) {
-      console.error(" Error posting comment:", error)
+      console.error("[v0] Error posting comment:", error)
       setStatusMessage(
         error instanceof Error
           ? error.message

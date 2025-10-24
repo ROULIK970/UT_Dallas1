@@ -14,11 +14,11 @@ export default function BlogDetailPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
+  console.log(params)
   const resolvedParams = React.use(params)
+  console.log(resolvedParams)
   const { blogs, isLoading, error } = useBlogs()
   const blogTitle = decodeURIComponent(resolvedParams.slug)
-  console.log(params)
-  console.log(blogTitle)
 
   const blog = blogs.find((blog) => blog.title === blogTitle)
 
@@ -28,26 +28,29 @@ export default function BlogDetailPage({
       new Date(a.date_of_publishing).getTime()
   )
 
+  const blogPdf = blog?.title.split(" ")[0].toLowerCase()
+  console.log(blogPdf)
+
   if (!blog) return notFound()
 
   return (
     <div className="p-10">
       <div className=" mx-auto">
-        <h1 className="text-[#101828] text-center text-[40px] mb-[12px]">
+        <h1 className="text-[#101828] text-center text-[40px] mb-3">
           {blog.title}
         </h1>
-        <p className="text-gray-600 text-center text-[20px] mb-[12px]">
+        <p className="text-gray-600 text-center text-[20px] mb-3">
           {blog.description}
         </p>
-        <p className="text-center mb-[12px]">{blog.author}</p>
+        <p className="text-center mb-3">{blog.author}</p>
         <Image
-          src={`http://localhost:1337${blog.thumbnail.formats.large.url}`}
-          width={1601}
-          height={500}
+          src={`https://ut-dallas-5poh.onrender.com/${blog.thumbnail.formats.large.url}`}
+          width={1201}
+          height={300}
           alt="blog-image"
           className="mx-auto"
         />
-        <div className="flex md:flex-row flex-col gap-[56px] md:mt-[100px] mt-[10px]">
+        <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5">
           <div className="flex flex-col gap-5">
             <p className="flex-1 md:text-[18px] text-[13px]">{blog.content}</p>
             <div className="flex justify-between items-center">
@@ -62,7 +65,7 @@ export default function BlogDetailPage({
                   Back to Home
                 </Link>
               </div>
-              <ShareAndDownloadButtons />
+              <ShareAndDownloadButtons pdfUrl={`/blogpdfs/${blogPdf}.pdf`} />
             </div>
           </div>
 
@@ -101,7 +104,7 @@ export default function BlogDetailPage({
         </div>
       </div>
 
-      <SimilarBlogsSection />
+      <SimilarBlogsSection activeBlog={blog.documentId} />
       <CommentSection blogId={blog.documentId} />
     </div>
   )

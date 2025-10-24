@@ -8,13 +8,11 @@ import staticData from "@/data/staticData.json"
 
 export default function page() {
   const { featuredBlogs, blogs, isLoading, error } = useBlogs()
-  console.log(blogs)
-  console.log(featuredBlogs)
 
   return (
     <div className="mb-3 mt-2 md:px-14 px-6">
       <div className="flex flex-col gap-4">
-        <div className="flex gap-2 mt-[20px]">
+        <div className="flex gap-2 mt-5">
           <Image
             src="/featured-article-logo.svg"
             alt="logo"
@@ -37,7 +35,7 @@ export default function page() {
               className="rounded-[14px] border border-[rgba(0,0,0,0.06)] flex flex-col xl:flex-row p-2 md:p-10 gap-5 "
             >
               <Image
-                src={`http://localhost:1337${blog.thumbnail.formats.large.url}`}
+                src={`https://ut-dallas-5poh.onrender.com/${blog.thumbnail.formats.large.url}`}
                 alt="featured-img"
                 width={695}
                 height={725}
@@ -46,7 +44,7 @@ export default function page() {
               <div className="flex-1 flex flex-col gap-6">
                 <div className="flex 2xl:gap-5 justify-around ">
                   <p className="rounded-[8.514px] border-[1.261px] border-[#00A648] bg-white text-[#00A648] text-[10px] md:text-[13.2px] px-[6px] py-[2px] md:py-[3.216px] md:px-[9.838px] flex-shrink-0">
-                    Rankings
+                    {blog.tags.split(",")[1]}
                   </p>
                   <div className="flex items-center gap-1">
                     <Image
