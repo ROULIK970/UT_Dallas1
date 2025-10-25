@@ -29,7 +29,7 @@ export default function BlogDetailPage({
   )
 
   const blogPdf = blog?.title.split(" ")[0].toLowerCase()
-  console.log(blogPdf)
+  console.log(blog)
 
   if (!blog) return notFound()
 
@@ -44,7 +44,7 @@ export default function BlogDetailPage({
         </p>
         <p className="text-center mb-3">{blog.author}</p>
         <Image
-          src={`https://ut-dallas-5poh.onrender.com${blog.thumbnail.formats.large.url}`}
+          src={blog.thumbnail.formats.large.url}
           width={1201}
           height={300}
           alt="blog-image"

@@ -57,7 +57,7 @@ export default function SimilarBlogsSection({
                 className="rounded-[10px] border mb-5 border-[rgba(68,98,169,0.2)] bg-white shadow-[0_4px_20px_0_rgba(153,86,236,0.08)] transform transition-all duration-300 ease-in-out grayscale hover:grayscale-0 hover:scale-105"
               >
                 <img
-                  src={`https://ut-dallas-5poh.onrender.com${blog.thumbnail.formats.medium.url}`}
+                  src={blog.thumbnail.formats.medium.url}
                   alt="featured-img"
                   className="w-full h-auto col-span-1 max-h-[200px]"
                 />

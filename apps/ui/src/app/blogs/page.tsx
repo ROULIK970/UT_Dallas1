@@ -34,7 +34,7 @@ export default function page() {
               className="rounded-[14px] border border-[rgba(0,0,0,0.06)] flex flex-col xl:flex-row p-2 md:p-10 gap-5 "
             >
               <Image
-                src={`https://ut-dallas-5poh.onrender.com${blog.thumbnail.formats.large.url}`}
+                src={blog.thumbnail.formats.large.url}
                 alt="featured-img"
                 width={695}
                 height={725}
