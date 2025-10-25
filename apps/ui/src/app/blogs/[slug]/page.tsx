@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -7,17 +5,17 @@ import { notFound } from "next/navigation"
 import CommentSection from "@/_components/CommentSection"
 import ShareAndDownloadButtons from "@/_components/ShareAndDownloadBtns"
 import SimilarBlogsSection from "@/_components/SimilarBlogsSection"
-import { useBlogs } from "@/context/blogContext"
+import { searchBlogs } from "@/api/services/blogs.service"
 
-export default function BlogDetailPage({
+export default async function BlogDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>
 }) {
-  console.log(params)
-  const resolvedParams = React.use(params)
+  const resolvedParams = await params
+  const blogs = await searchBlogs()
+
   console.log(resolvedParams)
-  const { blogs, isLoading, error } = useBlogs()
   const blogTitle = decodeURIComponent(resolvedParams.slug)
 
   const blog = blogs.find((blog) => blog.title === blogTitle)
