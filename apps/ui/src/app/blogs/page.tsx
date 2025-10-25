@@ -1,12 +1,10 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import SimilarBlogsSection from "@/_components/SimilarBlogsSection"
-import { useBlogs } from "@/context/blogContext"
+import { getFeaturedBlogs } from "@/api/services/blogs.service"
 
-export default function page() {
-  const { featuredBlogs, blogs, isLoading, error } = useBlogs()
+export default async function page() {
+  const featuredBlogs = await getFeaturedBlogs()
 
   return (
     <div className="mb-3 mt-2 md:px-14 px-6">
@@ -21,11 +19,7 @@ export default function page() {
           <h2 className="text-[16px] text-[#101828]">Featured Blog</h2>
         </div>
 
-        {isLoading ? (
-          <p>Loading featured blog...</p>
-        ) : error ? (
-          <p className="text-red-500">Error loading featured article</p>
-        ) : featuredBlogs.length === 0 ? (
+        {featuredBlogs.length === 0 ? (
           <p>No featured blog available</p>
         ) : (
           featuredBlogs.map((blog) => (
@@ -42,7 +36,7 @@ export default function page() {
               />
               <div className="flex-1 flex flex-col gap-6">
                 <div className="flex 2xl:gap-5 justify-around ">
-                  <p className="rounded-[8.514px] border-[1.261px] border-[#00A648] bg-white text-[#00A648] text-[10px] md:text-[13.2px] px-[6px] py-[2px] md:py-[3.216px] md:px-[9.838px] flex-shrink-0">
+                  <p className="rounded-[8.514px] border-[1.261px] border-[#00A648] bg-white text-[#00A648] text-[10px] md:text-[13.2px] px-[6px] py-[2px] md:py-[3.216px] md:px-[9.838px] shrink-0">
                     {blog.tags.split(",")[1]}
                   </p>
                   <div className="flex items-center gap-1">
