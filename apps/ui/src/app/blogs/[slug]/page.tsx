@@ -34,7 +34,7 @@ export default async function BlogDetailPage({
   return (
     <div className="p-10">
       <div className=" mx-auto">
-        <h1 className="text-[#101828] text-center text-[40px] mb-3">
+        <h1 className="text-[#101828] text-center md:text-[40px] text-[24px] mb-3">
           {blog.title}
         </h1>
         <p className="text-gray-600 text-center text-[20px] mb-3">
