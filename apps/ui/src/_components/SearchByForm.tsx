@@ -98,7 +98,7 @@ export default function SearchByForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.yearEnd}
-            className="w-full bg-transparent  text-[#000]"
+            className="w-full bg-transparent  text-black"
           >
             <option value="">2025</option>
             {yearOptions.map((year) => (
@@ -509,7 +509,7 @@ export default function SearchByForm() {
           type="submit"
           className={`absolute md:bottom-[-30px] bottom-[-21px] cursor-pointer left-1/2 -translate-x-1/2 
              rounded-[9px] ${searchClicked ? "bg-[#3B3098] text-white" : "bg-[#E1E3E8] text-[#1B212E]"} 
-             md:text-[20px] w-full md:w-auto text-[13px] md:py-[10px] py-[6px] md:px-[180px] px-[50px]`}
+             md:text-[20px] w-full md:w-auto text-[13px] md:py-2.5 py-1.5 md:px-[180px] px-[50px]`}
         >
           SEARCH
         </button>

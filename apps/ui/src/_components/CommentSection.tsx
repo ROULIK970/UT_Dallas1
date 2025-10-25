@@ -109,7 +109,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
       setIsError(false)
       resetForm()
     } catch (error) {
-      console.error("[v0] Error posting comment:", error)
+      console.error("Error posting comment:", error)
       setStatusMessage(
         error instanceof Error
           ? error.message
@@ -138,95 +138,107 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
         validationSchema={CommentSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <Form className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1">
-                Your Name
-              </label>
-              <Field
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Your name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
+        {({ isSubmitting, values }) => {
+          const isFilled =
+            values.name.trim() !== "" && values.comment.trim() !== ""
 
-            <div>
-              <label
-                htmlFor="comment"
-                className="block text-sm font-medium mb-1"
+          return (
+            <Form className="space-y-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Your Name
+                </label>
+                <Field
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="comment"
+                  className="block text-sm font-medium mb-1"
+                >
+                  Your Comment
+                </label>
+                <Field
+                  id="comment"
+                  name="comment"
+                  as="textarea"
+                  placeholder="What are your thoughts on this blog?"
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <ErrorMessage
+                  name="comment"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`cursor-pointer flex w-[245px] ml-auto px-5 py-4 justify-center items-center gap-2.5 rounded-[9px] border shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333]
+          ${
+            isFilled
+              ? "bg-[#3B3098] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] text-white hover:scale-105 transform transition-all duration-300 ease-in-out"
+              : "border-[#979797] bg-white text-[#333] hover:bg-gray-50"
+          }
+          disabled:opacity-50
+        `}
               >
-                Your Comment
-              </label>
-              <Field
-                id="comment"
-                name="comment"
-                as="textarea"
-                placeholder="What are your thoughts on this blog?"
-                rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-              <ErrorMessage
-                name="comment"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
+                {isSubmitting ? "Posting..." : "Post a Comment"}
+              </button>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="cursor-pointer flex w-[245px] ml-auto px-[20px] py-[16px] justify-center items-center gap-2.5 rounded-[9px] border border-[#979797] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] font-medium text-[#333] disabled:opacity-50 hover:bg-gray-50"
-            >
-              {isSubmitting ? "Posting..." : "Post a Comment"}
-            </button>
-
-            {statusMessage && (
-              <p
-                className={`text-sm ${isError ? "text-red-600" : "text-green-600"}`}
-              >
-                {statusMessage}
-              </p>
-            )}
-
-            <div className="mt-6" aria-live="polite">
-              {comments.length > 0 ? (
-                <div className="space-y-3">
-                  {comments.map((c, idx) => (
-                    <div
-                      key={idx}
-                      className="rounded-md border border-gray-200 p-3"
-                    >
-                      <div className="flex">
-                        <Image
-                          src="/demo-img.svg"
-                          alt={`${c.name}'s avatar`}
-                          width={32}
-                          height={32}
-                          className="rounded-full mr-2"
-                        />
-                        <p className="font-semibold text-[18px]">{c.name}</p>
-                      </div>
-
-                      <div className="text-[16px] text-gray-700">
-                        {c.comment}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-gray-500">No comments yet.</p>
+              {statusMessage && (
+                <p
+                  className={`text-sm ${isError ? "text-red-600" : "text-green-600"}`}
+                >
+                  {statusMessage}
+                </p>
               )}
-            </div>
-          </Form>
-        )}
+
+              <div className="mt-6" aria-live="polite">
+                {comments.length > 0 ? (
+                  <div className="space-y-3">
+                    {comments.map((c, idx) => (
+                      <div
+                        key={idx}
+                        className="rounded-md border border-gray-200 p-3"
+                      >
+                        <div className="flex items-center mb-4">
+                          <div className="flex items-center justify-center rounded-full  w-8 h-8 bg-blue-300 text-center p-5 font-bold mr-4">
+                            {c.name.charAt(0).toUpperCase()}
+                          </div>
+
+                          <p className="font-semibold text-[18px]">{c.name}</p>
+                        </div>
+
+                        <div className="text-[16px] text-gray-700">
+                          {c.comment}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">No comments yet.</p>
+                )}
+              </div>
+            </Form>
+          )
+        }}
       </Formik>
     </div>
   )
