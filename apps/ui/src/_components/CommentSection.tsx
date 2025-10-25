@@ -28,7 +28,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     const fetchComments = async () => {
       try {
         const apiUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+          process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
         const res = await fetch(
           `${apiUrl}/api/blogs/${blogId}?populate=comments`
         )
@@ -61,7 +61,8 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     setIsError(false)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
 
       const res = await fetch(`${apiUrl}/api/blogs/${blogId}?populate=comments`)
       if (!res.ok) throw new Error("Failed to fetch blog data")
