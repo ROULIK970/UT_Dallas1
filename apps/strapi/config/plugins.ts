@@ -3,18 +3,19 @@ export default ({ env }) => ({
     config: {
       provider: "aws-s3", // works because Cloudflare R2 is S3-compatible
       providerOptions: {
-        s3Options: {
-          credentials: {
-            accessKeyId: env("R2_ACCESS_KEY_ID"),
-            secretAccessKey: env("R2_SECRET_ACCESS_KEY"),
-          },
-          endpoint: env("R2_ENDPOINT"),
-          region: "auto",
+        credentials: {
+          accessKeyId: env("R2_ACCESS_KEY_ID"),
+          secretAccessKey: env("R2_SECRET_ACCESS_KEY"),
         },
+        endpoint: env("R2_ENDPOINT"),
+        region: "us-east-1",
+        s3ForcePathStyle: true,
+
         params: {
           Bucket: env("R2_BUCKET"),
           ACL: "public-read",
         },
+        baseUrl: env("R2_PUBLIC_URL"),
       },
       actionOptions: {
         upload: {},

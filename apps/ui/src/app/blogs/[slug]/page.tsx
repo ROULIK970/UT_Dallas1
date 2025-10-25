@@ -44,7 +44,7 @@ export default function BlogDetailPage({
         </p>
         <p className="text-center mb-3">{blog.author}</p>
         <Image
-          src={`https://ut-dallas-5poh.onrender.com/${blog.thumbnail.formats.large.url}`}
+          src={`https://ut-dallas-5poh.onrender.com${blog.thumbnail.formats.large.url}`}
           width={1201}
           height={300}
           alt="blog-image"

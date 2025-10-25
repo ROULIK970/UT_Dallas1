@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import SimilarBlogsSection from "@/_components/SimilarBlogsSection"
 import { useBlogs } from "@/context/blogContext"
-import staticData from "@/data/staticData.json"
 
 export default function page() {
   const { featuredBlogs, blogs, isLoading, error } = useBlogs()
@@ -19,15 +18,15 @@ export default function page() {
             height={10.6}
             width={21.2}
           />
-          <h2 className="text-[16px] text-[#101828]">Featured Article</h2>
+          <h2 className="text-[16px] text-[#101828]">Featured Blog</h2>
         </div>
 
         {isLoading ? (
-          <p>Loading featured articles...</p>
+          <p>Loading featured blog...</p>
         ) : error ? (
           <p className="text-red-500">Error loading featured article</p>
         ) : featuredBlogs.length === 0 ? (
-          <p>No featured articles available</p>
+          <p>No featured blog available</p>
         ) : (
           featuredBlogs.map((blog) => (
             <div
@@ -35,7 +34,7 @@ export default function page() {
               className="rounded-[14px] border border-[rgba(0,0,0,0.06)] flex flex-col xl:flex-row p-2 md:p-10 gap-5 "
             >
               <Image
-                src={`https://ut-dallas-5poh.onrender.com/${blog.thumbnail.formats.large.url}`}
+                src={`https://ut-dallas-5poh.onrender.com${blog.thumbnail.formats.large.url}`}
                 alt="featured-img"
                 width={695}
                 height={725}

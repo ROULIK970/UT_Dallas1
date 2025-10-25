@@ -28,8 +28,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     const fetchComments = async () => {
       try {
         const apiUrl =
-          process.env.NEXT_PUBLIC_API_URL ||
-          "https://ut-dallas-5poh.onrender.com"
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
         const res = await fetch(
           `${apiUrl}/api/blogs/${blogId}?populate=comments`
         )
@@ -62,8 +61,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
     setIsError(false)
 
     try {
-      const apiUrl =
-        process.env.NEXT_PUBLIC_API_URL || "https://ut-dallas-5poh.onrender.com"
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
 
       const res = await fetch(`${apiUrl}/api/blogs/${blogId}?populate=comments`)
       if (!res.ok) throw new Error("Failed to fetch blog data")
