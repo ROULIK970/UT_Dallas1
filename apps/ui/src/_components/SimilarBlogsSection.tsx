@@ -59,7 +59,7 @@ export default function SimilarBlogsSection({
                 <img
                   src={blog.thumbnail.formats.medium.url}
                   alt="featured-img"
-                  className="w-full h-auto col-span-1 max-h-[200px]"
+                  className="w-full h-auto col-span-1 max-h-[200px] rounded-sm"
                 />
 
                 <div className="p-5">

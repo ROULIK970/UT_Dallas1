@@ -32,7 +32,7 @@ export default async function page() {
                 alt="featured-img"
                 width={695}
                 height={725}
-                className="flex-2 items-center max-h-[600px]"
+                className="flex-2 items-center max-h-[600px] rounded-sm"
               />
               <div className="flex-1 flex flex-col gap-6">
                 <div className="flex 2xl:gap-5 justify-around ">

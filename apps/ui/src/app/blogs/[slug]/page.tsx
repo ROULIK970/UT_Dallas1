@@ -46,7 +46,7 @@ export default async function BlogDetailPage({
           width={1201}
           height={300}
           alt="blog-image"
-          className="mx-auto"
+          className="mx-auto rounded-sm"
         />
         <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5">
           <div className="flex flex-col gap-5">
