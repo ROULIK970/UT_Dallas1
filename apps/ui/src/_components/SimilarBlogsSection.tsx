@@ -63,8 +63,8 @@ export default function SimilarBlogsSection({
                 />
 
                 <div className="p-5">
-                  <div className="col-span-1 h-[100px]">
-                    <p className="font-semibold md:py-3 md:px-4 py-2.5 px-[15px] text-left rounded-sm text-[14px] bg-[rgba(68,98,169,0.1)] inline-flex h-[100px]">
+                  <div className="col-span-1 md:h-[100px]">
+                    <p className="font-semibold md:py-3 md:px-4 py-2.5 px-[15px] text-left rounded-sm text-[14px] bg-[rgba(68,98,169,0.1)] inline-flex md:h-[100px]">
                       {blog.title}
                     </p>
                   </div>
