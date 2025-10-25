@@ -152,11 +152,11 @@ export default function SearchByForm() {
       journal: Yup.array(),
     }),
     AdvancedSearch: Yup.object({
-      universityName: Yup.array()
-        .min(1, "Select at least one university name")
+      firstName: Yup.array()
+        .min(1, "Select at least one first name")
         .required("Required"),
-      authorsName: Yup.array()
-        .min(1, "Select at least one authors name")
+      lastName: Yup.array()
+        .min(1, "Select at least one last name")
         .required("Required"),
       articleName: Yup.array()
         .min(1, "Select at least one article name")
