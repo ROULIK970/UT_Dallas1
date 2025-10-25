@@ -76,7 +76,7 @@ export default async function BlogDetailPage({
                 key={index}
                 className="rounded-[10px] p-2 md:p-5 mt-2 border md:h-[225px] md:w-[461px] border-[rgba(68,98,169,0.2)] shadow-[0_4px_20px_0_rgba(153,86,236,0.08)]"
               >
-                <p className="md:py-[12px] md:px-[16px] py-[9px] px-[12px] mb-[12px] text-left rounded-[4px] bg-[rgba(68,98,169,0.1)] inline-flex">
+                <p className="md:py-3 md:px-4 py-[9px] px-3 mb-3 text-left rounded-[sm bg-[rgba(68,98,169,0.1)] inline-flex">
                   {blog.title}
                 </p>
                 <p className="text-[#1D2A49] text-[12px] md:text-[12px] font-semibold">
@@ -86,9 +86,7 @@ export default async function BlogDetailPage({
                   href={`/blogs/${encodeURIComponent(blog.title)}`}
                   className="flex "
                 >
-                  <p className="md:text-[16px] mt-[8px] text-[12px]">
-                    Read more
-                  </p>
+                  <p className="md:text-[16px] mt-2 text-[12px]">Read more</p>
                   <Image
                     src="/arrow-right-up.svg"
                     alt="arrow-right-up"

@@ -35,7 +35,7 @@ export default function SimilarBlogsSection({
           <button
             key={index}
             onClick={() => setActive(category)}
-            className={`${isActive ? "bg-[#3B3098] text-white" : ""} cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:border-2  hover:border-[#3B3098] border-2  border-[#D1D5DC] rounded-[45.75px] text-[18px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2`}
+            className={`${isActive ? "bg-[#3B3098] text-white" : ""} cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:border-2  hover:border-[#3B3098] border-2  border-[#D1D5DC] rounded-[45.75px] text-[10px] md:text-[12.3px] text-[#4A5565] py-[9px] px-[19px] md:py-[13px] md:px-[36px] mr-2 mt-2`}
           >
             {category}
           </button>
