@@ -33,18 +33,18 @@ export default function ShareAndDownloadButtons({ pdfUrl }: Props) {
   }
 
   return (
-    <div className="flex flex-1 gap-2 justify-between md:justify-end items-center  w-full">
+    <div className="flex flex-1 gap-2 justify-between md:justify-end items-center w-full">
       <button
         onClick={handleShare}
         className="cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 items-center px-2.5 md:py-4 md:px-5 flex rounded-[9px] border border-black shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
       >
-        <p className="md:text-[20px] text-[15px]">Share</p>
-        <Image src="/share-icon.svg" alt="share" width={24} height={24} />
+        <p className="lg:text-[16px] xl:text-[14px] 2xl:text-[20px]">Share</p>
+        <Image src="/share-icon.svg" alt="share" width={15} height={15} />
       </button>
 
       <button
         onClick={handleDownload}
-        className="cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 items-center px-2.5 md:py-4 md:px-5 text-[15px] md:text-[20px] text-[#FFFFFF] rounded-[9px] bg-[#3B3098] shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
+        className="cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 items-center px-2.5 md:py-4 md:px-5 lg:text-[16px] xl:text-[14px] 2xl:text-[20px] text-[#FFFFFF] rounded-[9px] bg-[#3B3098] shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
       >
         Download PDF/ Doc
       </button>

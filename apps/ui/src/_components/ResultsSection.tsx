@@ -23,7 +23,7 @@ export default function ResultsSection() {
 
   return (
     <>
-      {articles.length ? (
+      {articles.length && (
         <div className=" flex flex-col justify-center items-center mx-auto max-w-[80%] mt-[10em]">
           <div className="md:flex w-full sticky top-0 z-10 rounded-[14px] border border-gray-200 bg-white shadow-[0_1px_3px_0_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)] px-[21.889px] pt-[20.935px] pb-[21.9px]">
             <div className="text-left flex-1 ">
@@ -32,7 +32,7 @@ export default function ResultsSection() {
                 Found {articles.length} articles matching your criteria
               </p>
             </div>
-            <div className="flex-[0.3] flex items-center gap-4 md:justify-end">
+            <div className="w-full md:flex-[0.3] flex items-center justify-between gap-2 mt-2 md:justify-end md:mt-0">
               <p className="text-center text-[#364153] text-[12.3px]">
                 Sort By:
               </p>
@@ -63,7 +63,7 @@ export default function ResultsSection() {
                 <div className="flex md:flex-row flex-col md:gap-9 text-[#4A5565] text-[14px]">
                   <p className="max-w-[450px]">Article : {article.title}</p>
                   <p>Journal Abbreviation : {article.journalAbbreviation}</p>
-                  <div className="flex gap-2 items-center h-[20px]">
+                  <div className="flex gap-2 items-center h-5 ">
                     <Image
                       src="/calendar.svg"
                       width={14}
@@ -75,16 +75,17 @@ export default function ResultsSection() {
                   <p>Volume: {article.volume}</p>
                 </div>
 
-                <div className="flex gap-2 text-[#4A5565] text-[16px]">
-                  <p>Authors :</p>
-                  <div className="flex flex-wrap md:flex-row flex-col md:gap-3">
-                    {article.author.map((a, i) => (
-                      <div key={i} className="flex">
-                        <p>{a.firstName}</p>
-                        <p>{a.lastName},</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-2 text-[#4A5565] text-[14px]">
+                  <p className="font-medium">Authors:</p>
+                  {article.author.map((a, i) => (
+                    <span key={i} className="flex gap-1">
+                      <p>{a.firstName}</p>
+                      <p>
+                        {a.lastName}
+                        {i < article.author.length - 1 && ","}
+                      </p>
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -97,7 +98,14 @@ export default function ResultsSection() {
             </div>
           )}
         </div>
-      ) : (
+      )}
+      {isLoading && articles.length === 0 && (
+        <div className="flex justify-center items-center py-10">
+          <p className="text-gray-500 text-[14px]">Loading articles...</p>
+        </div>
+      )}
+
+      {!isLoading && articles.length === 0 && (
         <h1 className="text-center mt-10 text-gray-600">No results found</h1>
       )}
 

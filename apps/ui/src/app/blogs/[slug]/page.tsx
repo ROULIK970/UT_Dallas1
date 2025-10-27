@@ -18,37 +18,39 @@ export default async function BlogDetailPage({
   console.log(resolvedParams)
   const blogTitle = decodeURIComponent(resolvedParams.slug)
 
-  const blog = blogs.find((blog) => blog.title === blogTitle)
+  const blog = blogs?.find((blog) => blog?.title === blogTitle)
 
-  const sortedLatestBlogs = [...blogs].sort(
+  const sortedLatestBlogs = [...blogs]?.sort(
     (a, b) =>
       new Date(b.date_of_publishing).getTime() -
       new Date(a.date_of_publishing).getTime()
   )
 
-  const blogPdf = blog?.title.split(" ")[0].toLowerCase()
+  const blogPdf = blog?.title?.split(" ")[0].toLowerCase()
   console.log(blog)
 
   if (!blog) return notFound()
 
   return (
-    <div className="p-10">
-      <div className=" mx-auto">
-        <h1 className="text-[#101828] text-center md:text-[40px] text-[24px] mb-3">
+    <div className="md:p-10">
+      <div className="lg:px-[100px] md:px-[50px] mt-9">
+        <h1 className="text-[#101828] md:text-[40px] font-bold text-[24px] mb-6 px-2.5">
           {blog.title}
         </h1>
-        <p className="text-gray-600 text-center text-[20px] mb-3">
+        <p className="text-gray-600 text-[20px] mb-3 px-2.5">
           {blog.description}
         </p>
-        <p className="text-center mb-3">{blog.author}</p>
+        <p className=" mb-9 font-semibold px-2.5">
+          <span className="font-medium">By: </span> {blog.author}
+        </p>
         <Image
-          src={blog.thumbnail.formats.large.url}
-          width={1201}
-          height={300}
+          src={blog.banner.formats.large.url}
+          width={1200}
+          height={725}
           alt="blog-image"
-          className="mx-auto rounded-sm"
+          className="rounded-sm max-h-[674px]"
         />
-        <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5">
+        <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5 px-2.5">
           <div className="flex flex-col gap-5">
             <p className="flex-1 md:text-[18px] text-[13px]">{blog.content}</p>
             <div className="flex justify-between items-center">
@@ -59,7 +61,7 @@ export default async function BlogDetailPage({
                   width={24}
                   height={24}
                 />
-                <Link href="/blogs" className="text-[20px] text-[#1D2A49]">
+                <Link href="/blogs" className="text-[20px] text-[#1D2A49] ">
                   Back to Home
                 </Link>
               </div>
@@ -67,7 +69,7 @@ export default async function BlogDetailPage({
             </div>
           </div>
 
-          <div className="flex-1 hidden lg:block">
+          <div className="flex-1 hidden xl:block max-h-[500px]">
             <h1 className="text-[#1D2A49] text-[24px] md:text-[36px] font-medium">
               Latest Blogs
             </h1>

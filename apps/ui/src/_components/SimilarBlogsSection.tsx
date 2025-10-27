@@ -25,7 +25,7 @@ export default function SimilarBlogsSection({
   })
 
   return (
-    <div className="mt-[50px]">
+    <div className="mt-[50px] md:p-10 lg:px-[100px] md:px-[50px] px-6">
       <h1 className="text-[#1D2A49] text-[18px] md:text-[28px] font-semibold mb-[30px]">
         Similar Blogs
       </h1>
@@ -43,14 +43,14 @@ export default function SimilarBlogsSection({
       })}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-[70px] ">
-        {filteredBlogs.length === 0 ? (
+        {filteredBlogs?.length === 0 ? (
           <p className="text-center col-span-full text-gray-500 text-[16px] md:text-[18px]">
             No blogs in this category available.
           </p>
         ) : (
           filteredBlogs
-            .filter((b) => b.documentId !== activeBlog)
-            .map((blog, index) => (
+            ?.filter((b) => b.documentId !== activeBlog)
+            ?.map((blog, index) => (
               <Link
                 href={`/blogs/${encodeURIComponent(blog.title)}`}
                 key={index}
@@ -63,14 +63,14 @@ export default function SimilarBlogsSection({
                 />
 
                 <div className="p-5">
-                  <div className="col-span-1 md:h-[100px]">
-                    <p className="font-semibold md:py-3 md:px-4 py-2.5 px-[15px] text-left rounded-sm text-[14px] bg-[rgba(68,98,169,0.1)] inline-flex md:h-[100px]">
+                  <div className="col-span-1">
+                    <p className="font-semibold md:py-3 md:px-4 py-2.5 px-[15px] text-left rounded-sm text-[14px] bg-[rgba(68,98,169,0.1)] block md:min-h-[100px] w-full mb-2.5">
                       {blog.title}
                     </p>
                   </div>
 
                   <div className="flex justify-between mt-2.5">
-                    <div className="flex items-center gap-1.5 ">
+                    <div className="flex items-center gap-1.5">
                       <Image
                         src="/Publications_logo.png"
                         alt="publications-logo"

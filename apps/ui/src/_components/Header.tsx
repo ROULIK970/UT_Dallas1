@@ -37,7 +37,7 @@ export default function Header() {
   return (
     <div>
       <div className="flex  justify-between items-center h-[124px] px-6 bg-white">
-        <div className="relative w-[140px] md:w-[222px] h-[124px]">
+        <div className="relative w-[180px] md:w-[222px] h-[127px]">
           <Link href="/">
             <Image
               src="/FinerPlanet_logo.png"
@@ -53,7 +53,7 @@ export default function Header() {
             <h1 className="text-[20px] md:text-[36px] font-bold text-center max-w-[80%] mx-auto">
               The Finerplanet Top 100 Business School Research Rankings™
             </h1>
-            <div className="bg-gradient-to-r from-[#3B3098] to-[#00A649] w-[60px] h-[2px] mx-auto mt-1" />
+            <div className="bg-linear-to-r from-[#3B3098] to-[#00A649] w-[60px] h-0.5 mx-auto mt-1" />
           </div>
         )}
 

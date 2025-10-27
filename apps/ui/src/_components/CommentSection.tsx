@@ -130,7 +130,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
   }
 
   return (
-    <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-md md:p-10 lg:px-[100px] md:px-[50px]">
       <h2 className="text-xl font-semibold mb-4">Comments</h2>
 
       <Formik
