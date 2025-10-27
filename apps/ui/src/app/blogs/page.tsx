@@ -16,7 +16,9 @@ export default async function page() {
             height={10.6}
             width={21.2}
           />
-          <h2 className="text-[16px] text-[#101828]">Featured Blog</h2>
+          <h2 className="text-[26px] font-semibold text-[#101828]">
+            Featured Blog
+          </h2>
         </div>
 
         {featuredBlogs.length === 0 ? (
@@ -62,7 +64,7 @@ export default async function page() {
                     </p>
                   </div>
                 </div>
-                <h1 className="text-[#101828] text-[18px] md:text-[26.487px]">
+                <h1 className="text-[#101828] text-[38px] font-bold md:text-[26.487px]">
                   {blog.title}
                 </h1>
                 <p className="text-[#4A5565] text-[14px] md:text-[18px]">
