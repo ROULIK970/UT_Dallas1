@@ -1,56 +1,65 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Blog, searchBlogs } from "@/api/services/blogs.service"
 
 export default function Searchbar() {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<Blog[]>([])
+  const [debouncedQuery, setDebouncedQuery] = useState("")
 
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setQuery(value)
+  // debounce logic
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedQuery(query), 300)
+    return () => clearTimeout(handler)
+  }, [query])
 
-    if (value.trim() === "") {
-      setResults([])
-      return
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      if (!debouncedQuery.trim()) {
+        setResults([])
+        return
+      }
+      try {
+        const blogs = await searchBlogs(debouncedQuery)
+        setResults(blogs)
+      } catch (err) {
+        console.error("Search error:", err)
+        setResults([])
+      }
     }
 
-    try {
-      const blogs = await searchBlogs(value)
-      setResults(blogs)
-    } catch (err) {
-      console.error("Search error:", err)
-      setResults([])
-    }
-  }
+    fetchBlogs()
+  }, [debouncedQuery])
 
   return (
-    <div>
+    <div className="relative">
       <input
         type="text"
         value={query}
-        onChange={handleSearchChange}
+        onChange={(e) => setQuery(e.target.value)}
         placeholder="🔍 Search blogs..."
         className="w-full text-white placeholder-white rounded bg-gray-700 p-4"
       />
 
-      <div className="bg-white border-2 border-black mt-1 cursor-pointer z-50">
-        {results.map((blog) => (
-          <Link
-            onClick={() => {
-              setQuery("")
-              setResults([])
-            }}
-            href={`/blogs/${encodeURIComponent(blog.title)}`}
-            className="block text-black hover:bg-gray-100"
-            key={blog.id}
-          >
-            {blog.title}
-          </Link>
-        ))}
-      </div>
+      {results.length > 0 && (
+        <div className="absolute bg-white border-2 border-black mt-1 w-full z-50 max-h-64 overflow-y-auto rounded">
+          {results.map((blog) => (
+            <Link
+              key={blog.id}
+              href={`/blogs/${encodeURIComponent(blog.title)}`}
+              onClick={() => {
+                setQuery("")
+                setResults([])
+              }}
+              className="block text-black px-4 py-2 hover:bg-gray-100"
+            >
+              {blog.title}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
