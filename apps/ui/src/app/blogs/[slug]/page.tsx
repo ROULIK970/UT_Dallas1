@@ -34,13 +34,13 @@ export default async function BlogDetailPage({
   return (
     <div className="md:p-10">
       <div className="lg:px-[100px] md:px-[50px] mt-9">
-        <h1 className="text-[#101828] md:text-[46.6px] lg:text-[60px] xl:text-[80px] font-bold text-[33px] mb-10 px-2.5 leading-[110%]">
+        <h1 className="text-[#101828] md:text-[32.6px] lg:text-[46px] xl:text-[66px] font-bold text-[20px] mb-10 px-2.5 leading-[110%]">
           {blog.title}
         </h1>
-        <p className="text-gray-600 text-[30px] md:text-[36px] mb-3 px-2.5 leading-[110%]">
+        <p className="text-gray-600 text-[20px] md:text-[26px] mb-3 px-2.5 leading-[110%]">
           {blog.description}
         </p>
-        <p className=" mb-9 font-semibold px-2.5 text-[1.2rem] mt-7">
+        <p className=" mb-9 font-semibold px-2.5 text-[1.1rem] mt-7">
           <span className="font-medium ">By: </span> {blog.author}
         </p>
         <Image
@@ -52,7 +52,7 @@ export default async function BlogDetailPage({
         />
         <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5 px-2.5">
           <div className="flex flex-col gap-5">
-            <p className="flex-1 md:text-[2.1rem] text-[1.3rem] wrap-break-word">
+            <p className="flex-1 text-[1.3rem] mt-5 wrap-break-word">
               {blog.content}
             </p>
             <div className="flex justify-between items-center">
