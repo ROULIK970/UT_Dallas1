@@ -52,7 +52,7 @@ export default async function BlogDetailPage({
         />
         <div className="flex md:flex-row flex-col gap-14 md:mt-[100px] mt-2.5 px-2.5">
           <div className="flex flex-col gap-5">
-            <p className="flex-1 text-[0.8rem] mt-5 wrap-break-word">
+            <p className="flex-1 text-[0.8rem] md:text-[1.2rem] mt-5 wrap-break-word">
               {blog.content}
             </p>
             <div className="flex justify-between items-center">
