@@ -38,18 +38,30 @@ export const searchBlogs = async (searchQuery = ""): Promise<Blog[]> => {
   }
 }
 
+// export const getFeaturedBlogs = async (): Promise<Blog[]> => {
+//   try {
+//     const res = await apiClient.get(
+//       `blogs?populate=*&filters[featured][$eq]=true`
+//     )
+
+//     return res.data.data
+//   } catch (error: any) {
+//     console.error(
+//       "Error fetching featured blogs:",
+//       error.response?.data || error.message
+//     )
+//     throw new Error(error.message || "Failed to fetch featured blogs")
+//   }
+// }
 export const getFeaturedBlogs = async (): Promise<Blog[]> => {
   try {
     const res = await apiClient.get(
+      // no leading slash!
       `blogs?populate=*&filters[featured][$eq]=true`
     )
-
     return res.data.data
   } catch (error: any) {
-    console.error(
-      "Error fetching featured blogs:",
-      error.response?.data || error.message
-    )
+    console.error("Error fetching featured blogs:", error.message)
     throw new Error(error.message || "Failed to fetch featured blogs")
   }
 }
