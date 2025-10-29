@@ -8,6 +8,7 @@ export default async function page() {
 
   try {
     featuredBlogs = await getFeaturedBlogs()
+    console.log("Featured Blogs", featuredBlogs)
   } catch (error) {
     console.log(error, "error")
     return (
