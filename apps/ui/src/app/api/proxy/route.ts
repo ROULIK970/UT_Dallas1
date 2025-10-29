@@ -1,9 +1,7 @@
 export async function handler(req: Request) {
-  console.log(req.url)
-  const { searchParams } = new URL(
-    req.url,
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-  )
+  const url = "https://ut-dallas1-ui.vercel.app"
+
+  const { searchParams } = new URL(url)
 
   const strapiBase =
     process.env.NEXT_PUBLIC_API_BASE_PATH || "http://72.60.102.12:1337"
@@ -23,7 +21,6 @@ export async function handler(req: Request) {
 
     console.log(" Proxy request to:", apiUrl)
     console.log(" Strapi base:", strapiBase)
-    console.log(" Request method:", req.method)
 
     if (strapiBase === "http://72.60.102.12:1337") {
       console.warn(
