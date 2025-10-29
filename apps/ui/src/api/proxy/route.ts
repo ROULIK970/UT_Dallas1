@@ -14,7 +14,9 @@ export async function handler(req: Request) {
   }
 
   try {
-    const apiUrl = `${strapiBase.replace(/\/$/, "")}/api/${path.replace(/^\/?api\/?/, "")}`
+    const cleanedPath = path.replace(/^\/+/, "").replace(/^api\/+/, "")
+    const apiUrl = `${strapiBase.replace(/\/$/, "")}/api/${cleanedPath}`
+
     const res = await fetch(apiUrl, {
       method: req.method,
       headers: { "Content-Type": "application/json" },
