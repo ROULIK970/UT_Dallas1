@@ -20,6 +20,9 @@ export interface Blog {
   publishedAt: string
 }
 
+///api/proxy?path=
+//blogs?filters[title][$containsi]=${searchQuery}&populate=*
+
 export const searchBlogs = async (searchQuery = ""): Promise<Blog[]> => {
   try {
     const res = await apiClient.get(
