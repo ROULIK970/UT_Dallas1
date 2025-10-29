@@ -15,13 +15,15 @@
     }
   ],
   "workspaces": {
-    "packages": ["packages/*", "apps/*"],
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ],
     "nohoist": [
       "**/sharp",
       "**/sharp/**"
     ]
-  }
-,
+  },
   "scripts": {
     "build": "turbo build --cache-dir=.turbo",
     "build:strapi": "turbo run build --filter=@repo/strapi",

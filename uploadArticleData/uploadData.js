@@ -2,7 +2,7 @@ const fs = require("fs")
 const csv = require("csv-parser")
 const axios = require("axios")
 
-const STRAPI_URL = "https://ut-dallas-5poh.onrender.com/api/articles"
+const STRAPI_URL = "http://72.60.102.12/api/articles"
 const CSV_FILE_PATH = "./articleData.csv"
 const BATCH_SIZE = 100
 
