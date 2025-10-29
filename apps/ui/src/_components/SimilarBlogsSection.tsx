@@ -16,8 +16,6 @@ export default function SimilarBlogsSection({
   const [active, setActive] = useState("All")
   const blogCategories = ["All", "Research", "Rankings", "News"]
 
-  console.log(blogs.map((b) => b.tags))
-
   const filteredBlogs = blogs.filter((b) => {
     if (b.documentId === active) return false
     if (active === "All") return true

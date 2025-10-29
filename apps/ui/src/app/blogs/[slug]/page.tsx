@@ -15,7 +15,6 @@ export default async function BlogDetailPage({
   const resolvedParams = await params
   const blogs = await searchBlogs()
 
-  console.log(resolvedParams)
   const blogTitle = decodeURIComponent(resolvedParams.slug)
 
   const blog = blogs?.find((blog) => blog?.title === blogTitle)
@@ -27,7 +26,6 @@ export default async function BlogDetailPage({
   )
 
   const blogPdf = blog?.title?.split(" ")[0].toLowerCase()
-  console.log(blog)
 
   if (!blog) return notFound()
 

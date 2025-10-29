@@ -92,7 +92,6 @@ export const getArticlesByFiltering = async (
     const queryString = query.join("&")
 
     const res = await apiClient.get(`articles?${queryString}`)
-    console.log(res)
 
     const articlesData = res.data.data
     const pagination = res.data.meta.pagination

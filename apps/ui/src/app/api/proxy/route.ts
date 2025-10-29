@@ -1,10 +1,12 @@
 export async function handler(req: Request) {
-  const { searchParams } = new URL(req.url)
+  console.log(req.url)
+  const { searchParams } = new URL(
+    req.url,
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  )
 
   const strapiBase =
-    process.env.STRAPI_URL ||
-    process.env.NEXT_PUBLIC_API_BASE_PATH ||
-    "http://72.60.102.12:1337"
+    process.env.NEXT_PUBLIC_API_BASE_PATH || "http://72.60.102.12:1337"
 
   const path = searchParams.get("path")
 
@@ -19,20 +21,20 @@ export async function handler(req: Request) {
     const cleanedPath = path.replace(/^\/+/, "").replace(/^api\/+/, "")
     const apiUrl = `${strapiBase.replace(/\/$/, "")}/api/${cleanedPath}`
 
-    console.log("[v0] Proxy request to:", apiUrl)
-    console.log("[v0] Strapi base:", strapiBase)
-    console.log("[v0] Request method:", req.method)
+    console.log(" Proxy request to:", apiUrl)
+    console.log(" Strapi base:", strapiBase)
+    console.log(" Request method:", req.method)
 
     if (strapiBase === "http://72.60.102.12:1337") {
       console.warn(
-        "[v0] WARNING: Using default Strapi IP (Hostinger). If this fails, check:"
+        " WARNING: Using default Strapi IP (Hostinger). If this fails, check:"
       )
       console.warn(
-        "[v0]   1. Hostinger firewall settings - may be blocking Vercel IPs"
+        "   1. Hostinger firewall settings - may be blocking Vercel IPs"
       )
-      console.warn("[v0]   2. Strapi server status on Hostinger")
+      console.warn("   2. Strapi server status on Hostinger")
       console.warn(
-        "[v0]   3. Set STRAPI_URL env var if you have a different production URL"
+        "   3. Set STRAPI_URL env var if you have a different production URL"
       )
     }
 
@@ -54,9 +56,9 @@ export async function handler(req: Request) {
       signal: AbortSignal.timeout(30000),
     })
 
-    console.log("[v0] Strapi response status:", res.status)
+    console.log(" Strapi response status:", res.status)
     console.log(
-      "[v0] Strapi response headers:",
+      " Strapi response headers:",
       Object.fromEntries(res.headers.entries())
     )
 
@@ -68,13 +70,13 @@ export async function handler(req: Request) {
         ? await res.json()
         : await res.text()
     } catch (parseError) {
-      console.error("[v0] Failed to parse response body:", parseError)
+      console.error(" Failed to parse response body:", parseError)
       data = { raw: "Response body could not be parsed" }
     }
 
     if (!res.ok) {
-      console.error("[v0] Strapi error response:", data)
-      console.error("[v0] Full error - Status:", res.status, "URL:", apiUrl)
+      console.error(" Strapi error response:", data)
+      console.error(" Full error - Status:", res.status, "URL:", apiUrl)
       return Response.json(
         {
           error: "Failed to fetch from Strapi",
@@ -88,9 +90,9 @@ export async function handler(req: Request) {
 
     return Response.json(data)
   } catch (error: any) {
-    console.error("[v0] Proxy error:", error.message)
-    console.error("[v0] Error stack:", error.stack)
-    console.error("[v0] Full error object:", error)
+    console.error(" Proxy error:", error.message)
+    console.error(" Error stack:", error.stack)
+    console.error(" Full error object:", error)
 
     let helpMessage = error.message
     if (error.message.includes("ECONNREFUSED")) {

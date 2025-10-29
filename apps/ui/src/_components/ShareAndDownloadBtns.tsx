@@ -24,7 +24,6 @@ export default function ShareAndDownloadButtons({ pdfUrl }: Props) {
   }
 
   const handleDownload = () => {
-    console.log(pdfUrl)
     if (!pdfUrl) return alert("PDF not available.")
     const link = document.createElement("a")
     link.href = pdfUrl

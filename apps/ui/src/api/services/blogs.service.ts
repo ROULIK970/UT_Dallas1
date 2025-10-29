@@ -43,7 +43,7 @@ export const getFeaturedBlogs = async (): Promise<Blog[]> => {
     const res = await apiClient.get(
       `blogs?populate=*&filters[featured][$eq]=true`
     )
-    console.log("Featured blogs response:", res.data.data)
+
     return res.data.data
   } catch (error: any) {
     console.error(

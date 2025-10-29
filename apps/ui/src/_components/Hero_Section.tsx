@@ -12,7 +12,6 @@ export default function Hero_Section() {
   const { searchClicked } = useArticleSearch()
 
   const { active } = useNav()
-  console.log(active.split("-").join(" "))
 
   const heroDescriptions: Record<string, string> = {
     Author:

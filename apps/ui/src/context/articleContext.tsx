@@ -75,8 +75,6 @@ export function ArticleSearchProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true)
       const currentPage = loadMore ? page + 1 : 1
-      console.log(loadMore)
-      setError(null)
 
       const activeFilters = filtersParam || currentFilters || filters
 

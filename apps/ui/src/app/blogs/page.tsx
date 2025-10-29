@@ -4,9 +4,10 @@ import SimilarBlogsSection from "@/_components/SimilarBlogsSection"
 import { getFeaturedBlogs } from "@/api/services/blogs.service"
 
 export default async function page() {
+  console.log(process.env.NEXT_PUBLIC_API_BASE_PATH)
+
   // try {
   const featuredBlogs = await getFeaturedBlogs()
-  console.log("Featured Blogs", featuredBlogs)
   // } catch (error) {
   //   console.log(error, "error")
   //   return (

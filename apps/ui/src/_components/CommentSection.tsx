@@ -41,7 +41,6 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
         }))
 
         setComments(formattedComments)
-        console.log(formattedComments)
       } catch (error) {
         console.error("Error fetching comments:", error)
       } finally {
