@@ -4,19 +4,17 @@ import SimilarBlogsSection from "@/_components/SimilarBlogsSection"
 import { getFeaturedBlogs } from "@/api/services/blogs.service"
 
 export default async function page() {
-  let featuredBlogs = []
-
-  try {
-    featuredBlogs = await getFeaturedBlogs()
-    console.log("Featured Blogs", featuredBlogs)
-  } catch (error) {
-    console.log(error, "error")
-    return (
-      <div className="p-10 text-center h-[80vh] text-red-500">
-        <p>⚠️ Could not load blogs right now. Please try again later.</p>
-      </div>
-    )
-  }
+  // try {
+  const featuredBlogs = await getFeaturedBlogs()
+  console.log("Featured Blogs", featuredBlogs)
+  // } catch (error) {
+  //   console.log(error, "error")
+  //   return (
+  //     <div className="p-10 text-center h-[80vh] text-red-500">
+  //       <p>⚠️ Could not load blogs right now. Please try again later.</p>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="mb-3 mt-2 md:px-14 ">
