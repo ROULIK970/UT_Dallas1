@@ -16,10 +16,15 @@
 //   process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
 import axios from "axios"
 
+// Detect environment
 const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.VERCEL_ENV
 const vercelUrl = process.env.NEXT_PUBLIC_VERCEL_URL || process.env.VERCEL_URL
+
+// Detect if we’re in build phase (no server yet)
 const isBuildTime = typeof window === "undefined" && !vercelUrl
-const useProxy = vercelEnv && !isBuildTime
+
+// Only use proxy at runtime (NOT build)
+const useProxy = vercelEnv && vercelUrl && !isBuildTime
 
 const strapiBase =
   process.env.NEXT_PUBLIC_API_BASE_PATH?.replace(/\/$/, "") ||
@@ -31,19 +36,21 @@ export const apiClient = axios.create({
   headers: { "Content-Type": "application/json" },
 })
 
-// Debug: log URLs during build
+// 🧠 Debug log
 apiClient.interceptors.request.use((config) => {
-  console.log("🛰 Fetching:", `${config.baseURL ?? ""}${config.url ?? ""}`)
+  const fullUrl = `${config.baseURL ?? ""}${config.url ?? ""}`
+  console.log("🛰 Fetching:", fullUrl)
   return config
 })
 
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error(
-      "🚨 Axios Error URL:",
-      error.config?.baseURL + error.config?.url
-    )
+    const base = error.config?.baseURL ?? ""
+    const url = error.config?.url ?? ""
+    console.error("🚨 Axios Error URL:", `${base}${url}`)
     throw error
   }
 )
+
+export const basePath = strapiBase
