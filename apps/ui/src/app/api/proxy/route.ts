@@ -128,12 +128,25 @@
 // export { handler as GET, handler as POST, handler as PUT, handler as DELETE }
 
 export async function handler(req: Request) {
+  // ✅ Hardcode your Strapi path
+  const { searchParams } = new URL(req.url)
+  const rawPath = searchParams.get("path")
+
+  if (!rawPath) {
+    return Response.json(
+      { error: "Missing 'path' query parameter" },
+      { status: 400 }
+    )
+  }
+
+  const decodedPath = decodeURIComponent(rawPath)
   const strapiBase =
     process.env.NEXT_PUBLIC_API_BASE_PATH || "http://72.60.102.12:1337"
 
-  // ✅ Hardcode your Strapi path
-  const path = "/api/blogs?populate=*"
-  const apiUrl = `${strapiBase}${path}`
+  // const path = "/api/blogs?populate=*"
+  const apiUrl = `${strapiBase}/${decodedPath.replace(/^\/+/, "")}`
+
+  console.log("Proxying request to:", apiUrl)
 
   console.log(" Proxy request to:", apiUrl)
 
