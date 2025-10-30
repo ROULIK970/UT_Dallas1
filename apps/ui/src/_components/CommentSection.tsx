@@ -32,7 +32,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
           process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
         const res = await apiClient.get(`/blogs/${blogId}?populate=comments`)
 
-        const existingComments = res.data.comments || []
+        const existingComments = res.data.data?.comments || []
 
         const formattedComments = existingComments.map((c: any) => ({
           name: c.commentatorName || c.name,
@@ -64,7 +64,7 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
 
       const res = await apiClient.get(`/blogs/${blogId}?populate=comments`)
 
-      const existingComments = res.data.comments || []
+      const existingComments = res.data.data?.comments || []
 
       const newComment = {
         commentatorName: values.name,
