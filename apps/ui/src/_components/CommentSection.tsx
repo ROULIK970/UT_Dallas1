@@ -79,25 +79,14 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
         newComment,
       ]
 
-      const updateRes = await fetch(`${apiUrl}/api/blogs/${blogId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const updateRes = await apiClient.put(`/blogs/${blogId}`, {
+        data: {
+          comments: updatedComments,
         },
-        body: JSON.stringify({
-          data: {
-            comments: updatedComments,
-          },
-        }),
       })
 
-      if (!updateRes.ok) {
-        const errorData = await updateRes.json().catch(() => ({}))
-        console.error("[v0] Strapi error response:", errorData)
-
-        const errorMessage =
-          errorData?.error?.message || `Server error: ${updateRes.status}`
-        throw new Error(errorMessage)
+      if (!updateRes || !updateRes.data) {
+        throw new Error("Failed to update comments")
       }
 
       setComments([...comments, { name: values.name, comment: values.comment }])
