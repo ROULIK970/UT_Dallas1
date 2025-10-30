@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { apiClient } from "@/api/lib/lib/apiClient"
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import * as Yup from "yup"
 
@@ -29,11 +30,9 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
       try {
         const apiUrl =
           process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
-        const res = await fetch(
-          `${apiUrl}/api/blogs/${blogId}?populate=comments`
-        )
-        const data = await res.json()
-        const existingComments = data.data.comments || []
+        const res = await apiClient.get(`/blogs/${blogId}?populate=comments`)
+
+        const existingComments = res.data.comments || []
 
         const formattedComments = existingComments.map((c: any) => ({
           name: c.commentatorName || c.name,
@@ -63,11 +62,9 @@ const CommentSection = ({ blogId }: CommentSectionProps) => {
       const apiUrl =
         process.env.NEXT_PUBLIC_API_BASE_PATH || "http://localhost:1337"
 
-      const res = await fetch(`${apiUrl}/api/blogs/${blogId}?populate=comments`)
-      if (!res.ok) throw new Error("Failed to fetch blog data")
+      const res = await apiClient.get(`/blogs/${blogId}?populate=comments`)
 
-      const data = await res.json()
-      const existingComments = data.data.comments || []
+      const existingComments = res.data.comments || []
 
       const newComment = {
         commentatorName: values.name,
