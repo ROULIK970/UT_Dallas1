@@ -23,14 +23,22 @@ export default function SearchByForm() {
   const [articleOptions, setArticleOptions] = useState<
     { value: string; label: string }[]
   >([])
+  const [loadingOptions, setLoadingOptions] = useState(true)
 
   useEffect(() => {
     async function fetchOptions() {
-      const data = await getFilterOptions()
-      setFirstnameOptions(data.firstNameOptions)
-      setLastnameOptions(data.lastNameOptions)
-      setJournalOptions(data.journalOptions)
-      setArticleOptions(data.articleNameOptions)
+      setLoadingOptions(true)
+      try {
+        const data = await getFilterOptions()
+        setFirstnameOptions(data.firstNameOptions)
+        setLastnameOptions(data.lastNameOptions)
+        setJournalOptions(data.journalOptions)
+        setArticleOptions(data.articleNameOptions)
+      } catch (error) {
+        console.error("Failed to fetch filter options:", error)
+      } finally {
+        setLoadingOptions(false)
+      }
     }
     fetchOptions()
   }, [])
@@ -214,7 +222,11 @@ export default function SearchByForm() {
                   instanceId="firstName-select"
                   name="firstName"
                   inputId="firstName"
-                  options={firstnameOptions}
+                  options={
+                    loadingOptions
+                      ? [{ value: "", label: "Loading..." }]
+                      : firstnameOptions
+                  }
                   isMulti
                   placeholder="Enter First Name"
                   value={formik.values.firstName}
@@ -250,7 +262,11 @@ export default function SearchByForm() {
                   instanceId="firstName-select"
                   inputId="lastName"
                   name="lastName"
-                  options={lastnameOptions}
+                  options={
+                    loadingOptions
+                      ? [{ value: "", label: "Loading..." }]
+                      : lastnameOptions
+                  }
                   isMulti
                   placeholder="Enter last name"
                   value={formik.values.lastName}
@@ -289,7 +305,11 @@ export default function SearchByForm() {
                 instanceId="firstName-select"
                 name="journal"
                 inputId="journals"
-                options={journalOptions}
+                options={
+                  loadingOptions
+                    ? [{ value: "", label: "Loading..." }]
+                    : journalOptions
+                }
                 isMulti
                 placeholder="Select journal"
                 value={formik.values.journal}
@@ -333,7 +353,11 @@ export default function SearchByForm() {
                   instanceId="firstName-select"
                   inputId="articleName"
                   name="articleName"
-                  options={articleOptions}
+                  options={
+                    loadingOptions
+                      ? [{ value: "", label: "Loading..." }]
+                      : articleOptions
+                  }
                   isMulti
                   placeholder="Enter article name"
                   value={formik.values.articleName}
@@ -374,7 +398,11 @@ export default function SearchByForm() {
                 instanceId="firstName-select"
                 name="journal"
                 inputId="journal"
-                options={journalOptions}
+                options={
+                  loadingOptions
+                    ? [{ value: "", label: "Loading..." }]
+                    : journalOptions
+                }
                 isMulti
                 placeholder="Select journal"
                 value={formik.values.journal}
@@ -416,7 +444,11 @@ export default function SearchByForm() {
                   instanceId="firstName-select"
                   name="firstName"
                   inputId="firstName"
-                  options={firstnameOptions}
+                  options={
+                    loadingOptions
+                      ? [{ value: "", label: "Loading..." }]
+                      : firstnameOptions
+                  }
                   isMulti
                   placeholder="Enter First Name"
                   value={formik.values.firstName}
@@ -452,7 +484,11 @@ export default function SearchByForm() {
                   instanceId="firstName-select"
                   inputId="lastName"
                   name="lastName"
-                  options={lastnameOptions}
+                  options={
+                    loadingOptions
+                      ? [{ value: "", label: "Loading..." }]
+                      : lastnameOptions
+                  }
                   isMulti
                   placeholder="Enter last name"
                   value={formik.values.lastName}
@@ -490,7 +526,11 @@ export default function SearchByForm() {
                 instanceId="firstName-select"
                 inputId="articleName"
                 name="articleName"
-                options={articleOptions}
+                options={
+                  loadingOptions
+                    ? [{ value: "", label: "Loading..." }]
+                    : articleOptions
+                }
                 isMulti
                 placeholder="Enter article name"
                 value={formik.values.articleName}
