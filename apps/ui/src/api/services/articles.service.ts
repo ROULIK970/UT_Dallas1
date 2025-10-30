@@ -109,7 +109,7 @@ export const getArticlesByFiltering = async (
 export async function getFilterOptions() {
   try {
     const response = await apiClient.get(
-      "/articles?populate=author&pagination[pageSize]=100"
+      "articles?populate=author&pagination[pageSize]=100"
     )
     const articles = response.data.data
 
