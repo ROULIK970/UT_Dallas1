@@ -75,10 +75,10 @@ export default async function page() {
                     </p>
                   </div>
                 </div>
-                <h1 className="text-[#101828] text-[38px] font-bold md:text-[26.487px]">
+                <h1 className="text-[#101828] text-[28px] md:text-[38px] lg:text-[28px] font-bold ">
                   {blog.title}
                 </h1>
-                <p className="text-[#4A5565] text-[14px] md:text-[18px]">
+                <p className="text-[#4A5565] text-[14px] md:text-[22px] lg:text-[19px]">
                   {blog.description}
                 </p>
                 <div className="flex gap-3">
@@ -89,7 +89,7 @@ export default async function page() {
                     height={22}
                   />
                   <div>
-                    <p className="text-[#101828] font-semibold text-[12px] md:text-[17px]">
+                    <p className="text-[#101828] font-semibold text-[10px] md:text-[17px]">
                       {blog.author}
                     </p>
                   </div>
