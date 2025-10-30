@@ -31,7 +31,9 @@ export default function Navbar({
   const handleClick = async (key: string) => {
     setActive(key)
     if (key === "Blogs") {
+      setMobileMenuOpen(false)
       router.push("/blogs")
+      return
     } else {
       setSearchClicked(false)
 
