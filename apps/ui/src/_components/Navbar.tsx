@@ -71,23 +71,27 @@ export default function Navbar({
           ))}
         </div>
       ) : (
-        <div className="bg-[#1B212E] flex items-center h-[71px] px-6 gap-6">
-          {navElements.map((element) => (
-            <button
-              key={element.id}
-              className="text-white hidden md:block flex-1 text-[18px] text-center cursor-pointer"
-              onClick={() => handleClick(element.key)}
-            >
-              <span className="relative">
-                {element.name}
-                {active === element.key && (
-                  <span className="absolute left-0 bottom-0 h-0.5 w-full bg-gray-400"></span>
-                )}
-              </span>
-            </button>
-          ))}
+        <div className="bg-[#1B212E] flex flex-col md:flex-row items-center justify-between h-auto md:h-[71px] px-4 gap-4">
+          {/* Navigation buttons */}
+          <div className="hidden md:flex items-center gap-6 flex-1 justify-evenly min-w-0 overflow-hidden">
+            {navElements.map((element) => (
+              <button
+                key={element.id}
+                className="text-white text-[16px] lg:text-[18px] whitespace-nowrap cursor-pointer"
+                onClick={() => handleClick(element.key)}
+              >
+                <span className="relative">
+                  {element.name}
+                  {active === element.key && (
+                    <span className="absolute left-0 bottom-0 h-0.5 w-full bg-gray-400"></span>
+                  )}
+                </span>
+              </button>
+            ))}
+          </div>
 
-          <div className="flex-3 z-30">
+          {/* Searchbar section */}
+          <div className="w-full md:w-[240px] lg:w-[300px] xl:w-[380px] 2xl:w-[440px]">
             <Searchbar />
           </div>
         </div>
