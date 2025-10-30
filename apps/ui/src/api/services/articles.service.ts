@@ -91,9 +91,9 @@ export const getArticlesByFiltering = async (
 
     const queryString = query.join("&")
 
-    // const res = await apiClient.get(`articles?${queryString}`)
-    const encodedPath = encodeURIComponent(`articles?${queryString}`)
-    const res = await apiClient.get(`${encodedPath}`)
+    const res = await apiClient.get(`articles?${queryString}`)
+    // const encodedPath = encodeURIComponent(`articles?${queryString}`)
+    // const res = await apiClient.get(`${encodedPath}`)
 
     console.log("res for jour", res)
     const articlesData = res.data.data
@@ -111,10 +111,13 @@ export const getArticlesByFiltering = async (
 
 export async function getFilterOptions() {
   try {
-    const encodedPath = encodeURIComponent(
+    const response = await apiClient.get(
       "articles?populate=author&pagination[pageSize]=100"
     )
-    const response = await apiClient.get(`${encodedPath}`)
+    // const encodedPath = encodeURIComponent(
+    //   "articles?populate=author&pagination[pageSize]=100"
+    // )
+    // const response = await apiClient.get(`${encodedPath}`)
     console.log("res of art", response)
     const articles = response.data.data
 

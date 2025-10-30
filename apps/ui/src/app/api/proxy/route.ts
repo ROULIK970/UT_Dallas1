@@ -131,6 +131,7 @@ export async function handler(req: Request) {
   // ✅ Hardcode your Strapi path
   const { searchParams } = new URL(req.url)
   const rawPath = searchParams.get("path")
+  console.log("raw path", rawPath)
 
   if (!rawPath) {
     return Response.json(
