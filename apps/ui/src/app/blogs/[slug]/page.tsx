@@ -42,7 +42,7 @@ export default async function BlogDetailPage({
           <span className="font-medium ">By: </span> {blog.author}
         </p>
         <Image
-          src={blog.thumbnail.formats.large.url}
+          src={blog?.thumbnail?.formats?.large?.url}
           width={1200}
           height={725}
           alt="blog-image"

@@ -41,7 +41,7 @@ export default async function page() {
               className="rounded-[14px] md:border px-0 md:border-[rgba(0,0,0,0.06)] flex flex-col xl:flex-row md:p-10 gap-5 "
             >
               <Image
-                src={blog.thumbnail.formats.large.url}
+                src={blog?.thumbnail?.formats?.large?.url}
                 alt="featured-img"
                 width={695}
                 height={725}
