@@ -111,6 +111,7 @@ export async function getFilterOptions() {
     const response = await apiClient.get(
       "articles?populate=author&pagination[pageSize]=100"
     )
+    console.log("res of art", response)
     const articles = response.data.data
 
     const firstNames = new Set<string>()
