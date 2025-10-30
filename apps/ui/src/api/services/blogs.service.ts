@@ -26,7 +26,7 @@ export interface Blog {
 export const searchBlogs = async (searchQuery = ""): Promise<Blog[]> => {
   try {
     const res = await apiClient.get(
-      `blogs?filters[title][$containsi]=${searchQuery}&populate=*`
+      `api/blogs?filters[title][$containsi]=${searchQuery}&populate=*`
     )
     return res.data.data
   } catch (error: any) {
@@ -57,7 +57,7 @@ export const getFeaturedBlogs = async (): Promise<Blog[]> => {
   try {
     const res = await apiClient.get(
       // no leading slash!
-      `blogs?populate=*&filters[featured][$eq]=true`
+      `api/blogs?populate=*&filters[featured][$eq]=true`
     )
     return res.data.data
   } catch (error: any) {
