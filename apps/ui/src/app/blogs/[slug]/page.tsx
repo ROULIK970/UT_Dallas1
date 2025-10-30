@@ -53,19 +53,27 @@ export default async function BlogDetailPage({
             <p className="flex-1 text-[0.8rem] md:text-[1.2rem] mt-5 wrap-break-word">
               {blog.content}
             </p>
-            <div className="flex justify-between items-center">
-              <div className="flex-1 hidden md:flex">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8 mt-6">
+              {/* Back to home */}
+              <div className="flex items-center gap-2 self-start md:self-auto">
                 <Image
                   src="/arrow-left-line.svg"
                   alt="arrow-left-line"
                   width={24}
                   height={24}
                 />
-                <Link href="/blogs" className="text-[20px] text-[#1D2A49] ">
+                <Link
+                  href="/blogs"
+                  className="text-[18px] md:text-[20px] text-[#1D2A49] font-medium"
+                >
                   Back to Home
                 </Link>
               </div>
-              <ShareAndDownloadButtons pdfUrl={`/blogpdfs/${blogPdf}.pdf`} />
+
+              {/* Share and Download */}
+              <div className="w-full md:w-auto">
+                <ShareAndDownloadButtons pdfUrl={`/blogpdfs/${blogPdf}.pdf`} />
+              </div>
             </div>
           </div>
 

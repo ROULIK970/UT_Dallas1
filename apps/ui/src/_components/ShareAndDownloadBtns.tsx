@@ -32,20 +32,22 @@ export default function ShareAndDownloadButtons({ pdfUrl }: Props) {
   }
 
   return (
-    <div className="flex flex-1 gap-2 justify-between md:justify-end items-center w-full">
+    <div className="flex flex-nowrap gap-3 justify-between md:justify-end items-center w-full">
       <button
         onClick={handleShare}
-        className="cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 items-center px-2.5 md:py-4 md:px-5 flex rounded-[9px] border border-black shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
+        className="flex items-center gap-2 cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 px-3 md:py-3 md:px-5 rounded-[9px] border border-black shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
       >
-        <p className="lg:text-[16px] xl:text-[14px] 2xl:text-[20px]">Share</p>
+        <p className="text-sm md:text-base xl:text-[14px] 2xl:text-[20px]">
+          Share
+        </p>
         <Image src="/share-icon.svg" alt="share" width={15} height={15} />
       </button>
 
       <button
         onClick={handleDownload}
-        className="cursor-pointer hover:scale-105 transform transition-all duration-300 ease-in-out py-2 items-center px-2.5 md:py-4 md:px-5 lg:text-[16px] xl:text-[14px] 2xl:text-[20px] text-[#FFFFFF] rounded-[9px] bg-[#3B3098] shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
+        className="flex items-center justify-center cursor-pointer whitespace-nowrap hover:scale-105 transform transition-all duration-300 ease-in-out py-2 px-3 md:py-3 md:px-5 text-sm md:text-base xl:text-[14px] 2xl:text-[20px] text-white rounded-[9px] bg-[#3B3098] shadow-[0_0_10px_0_rgba(0,0,0,0.1)]"
       >
-        Download PDF/ Doc
+        Download PDF / Doc
       </button>
     </div>
   )
