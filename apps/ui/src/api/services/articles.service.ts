@@ -111,9 +111,10 @@ export const getArticlesByFiltering = async (
 
 export async function getFilterOptions() {
   try {
-    const response = await apiClient.get(
+    const encodedPath = encodeURIComponent(
       "articles?populate=author&pagination[pageSize]=100"
     )
+    const response = await apiClient.get(`${encodedPath}`)
     console.log("res of art", response)
     const articles = response.data.data
 

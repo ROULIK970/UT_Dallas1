@@ -50,11 +50,11 @@ export default function SearchByForm() {
 
   const YearComponent = () => (
     <div className="flex flex-col md:max-w-[45%] text-left flex-1 md:flex-[0.5] ">
-      <label className="text-[16px] text-[#333] mb-[10px]" htmlFor="yearRange">
+      <label className="text-[16px] text-[#333] mb-2.5" htmlFor="yearRange">
         Select the year range
       </label>
 
-      <div className="flex items-center border rounded-lg overflow-hidden p-[10px] bg-[#F1F5FF]">
+      <div className="flex items-center border rounded-lg overflow-hidden p-2.5 bg-[#F1F5FF]">
         {/* Start Year */}
         <div className="flex items-center md:px-3 py-2 flex-1">
           <Image
