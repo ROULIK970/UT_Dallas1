@@ -33,7 +33,9 @@ const strapiBase =
   process.env.NEXT_PUBLIC_API_BASE_PATH?.replace(/\/$/, "") ||
   "http://72.60.102.12:1337"
 
-const baseURL = useProxy ? "/api/proxy?path=" : `${strapiBase}/api/`
+const baseURL = useProxy
+  ? "http://72.60.102.12:1337/api/proxy?path="
+  : `http://72.60.102.12:1337/api/`
 
 console.log("🧠 [apiClient] Environment:", {
   vercelEnv,
