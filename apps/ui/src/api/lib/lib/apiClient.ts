@@ -34,7 +34,7 @@ const strapiBase =
   "http://72.60.102.12:1337"
 
 const baseURL = useProxy
-  ? "http://72.60.102.12:1337/api/proxy?path="
+  ? "ut-dallas1-g1azulnvb-roulik970s-projects.vercel.app/api/proxy?path="
   : `http://72.60.102.12:1337/api/`
 
 console.log("🧠 [apiClient] Environment:", {
