@@ -91,8 +91,11 @@ export const getArticlesByFiltering = async (
 
     const queryString = query.join("&")
 
-    const res = await apiClient.get(`articles?${queryString}`)
+    // const res = await apiClient.get(`articles?${queryString}`)
+    const encodedPath = encodeURIComponent(`articles?${queryString}`)
+    const res = await apiClient.get(`${encodedPath}`)
 
+    console.log("res for jour", res)
     const articlesData = res.data.data
     const pagination = res.data.meta.pagination
 

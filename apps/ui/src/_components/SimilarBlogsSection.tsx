@@ -41,7 +41,11 @@ export default function SimilarBlogsSection({
       })}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-[70px] ">
-        {filteredBlogs?.length === 0 ? (
+        {isLoading ? (
+          <p className="text-center col-span-full text-gray-500 text-[16px] md:text-[18px]">
+            Loading similar blogs...
+          </p>
+        ) : filteredBlogs?.length === 0 ? (
           <p className="text-center col-span-full text-gray-500 text-[16px] md:text-[18px]">
             No blogs in this category available.
           </p>
