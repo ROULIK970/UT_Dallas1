@@ -91,7 +91,7 @@ export const getArticlesByFiltering = async (
 
     const queryString = query.join("&")
 
-    const res = await apiClient.get(`api/articles?${queryString}`)
+    const res = await apiClient.get(`articles?${queryString}`)
     // const encodedPath = encodeURIComponent(`articles?${queryString}`)
     // const res = await apiClient.get(`${encodedPath}`)
 
@@ -112,7 +112,7 @@ export const getArticlesByFiltering = async (
 export async function getFilterOptions() {
   try {
     const response = await apiClient.get(
-      "api/articles?populate=author&pagination[pageSize]=100"
+      "articles?populate=author&pagination[pageSize]=100"
     )
     // const encodedPath = encodeURIComponent(
     //   "articles?populate=author&pagination[pageSize]=100"
